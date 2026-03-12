@@ -1,35 +1,57 @@
 import { Link } from "react-router-dom";
-import { Leaf, Linkedin, Mail } from "lucide-react";
+import { Leaf, Linkedin, Mail, MapPin } from "lucide-react";
+
+const sections = [
+  { to: "/about", label: "Perfil Profesional" },
+  { to: "/expertise", label: "Especialidades" },
+  { to: "/projects", label: "Proyectos" },
+  { to: "/education", label: "Educación e Investigación" },
+  { to: "/awards", label: "Reconocimientos" },
+  { to: "/contact", label: "Contacto" },
+];
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-950 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Brand */}
-          <div>
-            <Link to="/" className="flex items-center gap-2 text-white font-serif text-xl font-semibold mb-4">
-              <Leaf className="h-5 w-5 text-primary-400" />
-              <span>Melissa</span>
+    <footer className="bg-primary-900 text-white">
+      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
+          {/* Brand column */}
+          <div className="md:col-span-5">
+            <Link to="/" className="inline-flex items-center gap-2.5 mb-5">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10">
+                <Leaf className="h-4 w-4 text-primary-300" />
+              </div>
+              <span className="font-serif text-xl font-semibold text-white">Melissa Velásquez</span>
             </Link>
-            <p className="text-primary-200/70 text-sm leading-relaxed max-w-xs">
-              Economista y especialista en sostenibilidad comprometida con estrategias climáticas y desarrollo global.
+            <p className="text-primary-200/70 text-sm leading-relaxed max-w-sm mb-6">
+              Economista especializada en estrategia climática, desarrollo urbano sostenible y cooperación
+              internacional. Impactando políticas públicas a escala global.
             </p>
+            <div className="flex flex-col gap-2.5">
+              <a href="mailto:melissa.velasquez@consultoria.com"
+                className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors w-fit">
+                <Mail className="h-4 w-4 flex-shrink-0" />
+                melissa.velasquez@consultoria.com
+              </a>
+              <a href="https://linkedin.com/in/melissavelasquez" target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors w-fit">
+                <Linkedin className="h-4 w-4 flex-shrink-0" />
+                linkedin.com/in/melissavelasquez
+              </a>
+              <span className="flex items-center gap-2 text-sm text-primary-200/70">
+                <MapPin className="h-4 w-4 flex-shrink-0" />
+                Bogotá, Colombia · Disponible en remoto
+              </span>
+            </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-primary-300 mb-4">
-              Navegación
+          {/* Nav column */}
+          <div className="md:col-span-3">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-primary-300/80 mb-5">
+              Secciones
             </h4>
-            <ul className="space-y-2">
-              {[
-                { to: "/about", label: "Sobre Mí" },
-                { to: "/expertise", label: "Especialidades" },
-                { to: "/projects", label: "Proyectos" },
-                { to: "/education", label: "Educación" },
-                { to: "/contact", label: "Contacto" },
-              ].map(({ to, label }) => (
+            <ul className="space-y-2.5">
+              {sections.map(({ to, label }) => (
                 <li key={to}>
                   <Link to={to} className="text-sm text-primary-200/70 hover:text-white transition-colors">
                     {label}
@@ -39,31 +61,35 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-primary-300 mb-4">
-              Contacto
+          {/* Focus areas column */}
+          <div className="md:col-span-4">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-primary-300/80 mb-5">
+              Áreas de Enfoque
             </h4>
-            <ul className="space-y-3">
-              <li>
-                <a href="mailto:contacto@melissa.com" className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors">
-                  <Mail className="h-4 w-4" />
-                  contacto@melissa.com
-                </a>
-              </li>
-              <li>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors">
-                  <Linkedin className="h-4 w-4" />
-                  LinkedIn
-                </a>
-              </li>
+            <ul className="space-y-2.5">
+              {[
+                "Estrategia Climática",
+                "Desarrollo Urbano Sostenible",
+                "Política Ambiental",
+                "Cooperación Internacional",
+                "Economía Ambiental",
+                "Sostenibilidad Corporativa",
+              ].map((area) => (
+                <li key={area} className="flex items-center gap-2 text-sm text-primary-200/70">
+                  <span className="w-1 h-1 rounded-full bg-primary-400 flex-shrink-0" />
+                  {area}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-primary-800/50 text-center">
-          <p className="text-xs text-primary-200/50">
-            &copy; {new Date().getFullYear()} Melissa. Todos los derechos reservados.
+        <div className="pt-6 border-t border-primary-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-primary-200/40">
+            &copy; {new Date().getFullYear()} Melissa Velásquez. Todos los derechos reservados.
+          </p>
+          <p className="text-xs text-primary-200/40">
+            Economista · Estrategia Climática · Desarrollo Internacional
           </p>
         </div>
       </div>
