@@ -26,15 +26,17 @@ export default function Home() {
         />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-10 pt-28 pb-16
-                        grid grid-cols-12 items-center gap-4">
+            grid grid-cols-12 items-center gap-6">
 
           {/* ── LEFT – Testimonial & Stats ── */}
           <div className="col-span-3 space-y-6">
             {/* Quote */}
-            <div className="text-5xl font-black leading-none text-forest">"</div>
-            <p className="text-sm text-dark/60 leading-relaxed italic font-body">
-              Melissa's strategic vision on climate policy transformed our institutional framework.
-              Highly recommended.
+            <div className="text-6xl font-black leading-none text-forest">"</div>
+            <p className="text-sm md:text-[15px] text-dark/70 leading-6 md:leading-7 font-body">
+              Sustainability and climate action are among the defining priorities of our time,
+              shaping how cities grow, how economies evolve, and how institutions operate.
+              Melissa Velásquez works at the intersection of climate strategy, economic systems,
+              and urban development to support resilient and sustainable communities.
             </p>
 
             {/* Stars */}
@@ -65,48 +67,45 @@ export default function Home() {
           {/* ── CENTER – Name + Photo + CTAs ── */}
           <div className="col-span-6 flex flex-col items-center text-center relative">
 
-            {/* Hello badge */}
-            <div className="mb-5 flex items-center gap-2 px-4 py-1.5 rounded-full border border-soft-green/30 text-sm text-forest shadow-sm font-body">
-              <span>Hello!</span>
-              <span>🌿</span>
-            </div>
+            
 
             {/* Headline */}
-            <h1 className="text-5xl md:text-6xl font-black leading-tight tracking-tight text-dark mb-2">
+            <h1 className="text-6xl md:text-7xl font-black leading-tight tracking-tight text-dark mb-1">
               I'm <span className="text-forest">Melissa,</span>
             </h1>
-            <h2 className="text-4xl md:text-5xl font-black leading-tight tracking-tight text-dark mb-8">
+            <h2 className="text-5xl md:text-6xl font-black leading-tight tracking-tight text-dark mb-8">
               Climate Economist
             </h2>
 
-            {/* Photo with orange circle */}
-            <div className="relative flex items-end justify-center"
-                 style={{ height: '320px', width: '320px' }}>
-              {/* Orange circle background */}
+            {/* Photo with circle */}
+            <div className="relative flex items-end justify-center overflow-visible"
+                 style={{ height: '500px', width: '660px' }}>
+              {/* Semicircle background */}
               <div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full"
-                style={{ width: '260px', height: '260px', background: '#95D5B2' }}
-              />
-              {/* Portrait container */}
-              <div
-                className="relative z-10 rounded-t-full overflow-hidden flex items-end justify-center"
+                className="absolute bottom-0 left-1/2 -translate-x-1/2"
                 style={{
-                  width: '240px',
-                  height: '300px',
-                  background: 'linear-gradient(180deg, #f5f5f5 0%, #e8e8e8 100%)',
+                  width: '600px',
+                  height: '350px',
+                  background: '#95D5B2',
+                  borderTopLeftRadius: '500px',
+                  borderTopRightRadius: '500px',
                 }}
+              />
+              <div
+                className="relative z-10 flex items-end justify-center -mb-1"
+                style={{ width: '460px', height: '540px' }}
               >
-                <div className="text-center pb-6 text-gray-400">
-                  <svg className="w-20 h-20 mx-auto mb-2 opacity-40" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                  </svg>
-                  <p className="text-xs font-medium">Professional Portrait</p>
-                </div>
+                <img
+                  src="/Perfil.png"
+                  alt="Melissa Velásquez portrait"
+                  className="w-full h-full object-contain object-bottom"
+                  style={{ filter: 'drop-shadow(0 20px 26px rgba(27,67,50,0.25))' }}
+                />
               </div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex gap-4 mt-8">
+            <div className="flex gap-4 mt-5">
               <Link
                 to="/projects"
                 className="flex items-center gap-2 px-7 py-3 rounded-full font-bold text-white text-sm shadow-lg transition-all hover:scale-105 hover:shadow-xl"
