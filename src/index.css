@@ -4,6 +4,12 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
 
+  --color-deep-green: #1B4332;
+  --color-forest-green: #2D6A4F;
+  --color-soft-green: #95D5B2;
+  --color-light-neutral: #F8F9FA;
+  --color-dark-gray: #2B2D42;
+
   /* ──────────────────────────────────────────────
      Primary green scale
      900  →  #1B4332  Deep Green    (brand anchor)

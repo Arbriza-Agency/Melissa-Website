@@ -1,98 +1,102 @@
-import { Link } from "react-router-dom";
-import { Leaf, Linkedin, Mail, MapPin } from "lucide-react";
+import { Link } from 'react-router-dom'
 
-const sections = [
-  { to: "/about", label: "Perfil Profesional" },
-  { to: "/expertise", label: "Especialidades" },
-  { to: "/projects", label: "Proyectos" },
-  { to: "/education", label: "Educación e Investigación" },
-  { to: "/awards", label: "Reconocimientos" },
-  { to: "/contact", label: "Contacto" },
-];
+const pages = [
+  { to: '/',          label: 'Home' },
+  { to: '/about',     label: 'About' },
+  { to: '/expertise', label: 'Expertise' },
+  { to: '/projects',  label: 'Projects' },
+  { to: '/education', label: 'Education & Research' },
+  { to: '/awards',    label: 'Awards & Certifications' },
+]
+
+const focus = [
+  'Climate Strategy and Policy',
+  'Sustainable Urban Development',
+  'Environmental Economics',
+  'International Cooperation',
+]
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-900 text-white">
-      <div className="mx-auto max-w-7xl px-6 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
-          {/* Brand column */}
-          <div className="md:col-span-5">
-            <Link to="/" className="inline-flex items-center gap-2.5 mb-5">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10">
-                <Leaf className="h-4 w-4 text-primary-300" />
-              </div>
-              <span className="font-serif text-xl font-semibold text-white">Melissa Velásquez</span>
-            </Link>
-            <p className="text-primary-200/70 text-sm leading-relaxed max-w-sm mb-6">
-              Economista especializada en estrategia climática, desarrollo urbano sostenible y cooperación
-              internacional. Impactando políticas públicas a escala global.
+    <footer className="text-white py-14 px-10" style={{ background: '#111' }}>
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+
+        {/* Brand */}
+        <div>
+          <h5 className="font-black text-lg mb-3" style={{ fontFamily: 'sans-serif' }}>
+            Melissa Velásquez
+          </h5>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: '#9CA3AF' }}>
+            Economist focused on climate strategy, sustainability, and urban development.
+            Professional profile for policy-oriented consulting and research collaboration.
+          </p>
+          <div className="space-y-1.5 text-sm" style={{ color: '#9CA3AF' }}>
+            <p className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+              <span>✉</span> melissa.velasquez@consultoria.com
             </p>
-            <div className="flex flex-col gap-2.5">
-              <a href="mailto:melissa.velasquez@consultoria.com"
-                className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors w-fit">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                melissa.velasquez@consultoria.com
-              </a>
-              <a href="https://linkedin.com/in/melissavelasquez" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-primary-200/70 hover:text-white transition-colors w-fit">
-                <Linkedin className="h-4 w-4 flex-shrink-0" />
-                linkedin.com/in/melissavelasquez
-              </a>
-              <span className="flex items-center gap-2 text-sm text-primary-200/70">
-                <MapPin className="h-4 w-4 flex-shrink-0" />
-                Bogotá, Colombia · Disponible en remoto
-              </span>
-            </div>
-          </div>
-
-          {/* Nav column */}
-          <div className="md:col-span-3">
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-primary-300/80 mb-5">
-              Secciones
-            </h4>
-            <ul className="space-y-2.5">
-              {sections.map(({ to, label }) => (
-                <li key={to}>
-                  <Link to={to} className="text-sm text-primary-200/70 hover:text-white transition-colors">
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Focus areas column */}
-          <div className="md:col-span-4">
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-primary-300/80 mb-5">
-              Áreas de Enfoque
-            </h4>
-            <ul className="space-y-2.5">
-              {[
-                "Estrategia Climática",
-                "Desarrollo Urbano Sostenible",
-                "Política Ambiental",
-                "Cooperación Internacional",
-                "Economía Ambiental",
-                "Sostenibilidad Corporativa",
-              ].map((area) => (
-                <li key={area} className="flex items-center gap-2 text-sm text-primary-200/70">
-                  <span className="w-1 h-1 rounded-full bg-primary-400 flex-shrink-0" />
-                  {area}
-                </li>
-              ))}
-            </ul>
+            <p className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+              <span>🔗</span> linkedin.com/in/melissavelasquez
+            </p>
+            <p className="flex items-center gap-2">
+              <span>📍</span> Bogotá, Colombia · Remote Available
+            </p>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-primary-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-primary-200/40">
-            &copy; {new Date().getFullYear()} Melissa Velásquez. Todos los derechos reservados.
+        {/* Pages */}
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] mb-4" style={{ color: '#6B7280' }}>
+            Pages
           </p>
-          <p className="text-xs text-primary-200/40">
-            Economista · Estrategia Climática · Desarrollo Internacional
+          <ul className="space-y-2">
+            {pages.map(({ to, label }) => (
+              <li key={to}>
+                <Link
+                  to={to}
+                  className="text-sm transition-colors duration-200 hover:text-white"
+                  style={{ color: '#9CA3AF' }}
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Focus */}
+        <div>
+          <p className="text-xs uppercase tracking-[0.2em] mb-4" style={{ color: '#6B7280' }}>
+            Focus
           </p>
+          <ul className="space-y-2.5">
+            {focus.map(f => (
+              <li key={f} className="flex items-center gap-2.5">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: '#E8410A' }}
+                />
+                <span className="text-sm" style={{ color: '#9CA3AF' }}>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 pt-8" style={{ borderTop: '1px solid #1F2937' }}>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200 hover:text-white"
+              style={{ color: '#E8410A' }}
+            >
+              Start a Collaboration →
+            </Link>
+          </div>
         </div>
       </div>
+
+      {/* Bottom bar */}
+      <div className="max-w-7xl mx-auto mt-10 pt-6" style={{ borderTop: '1px solid #1F2937' }}>
+        <p className="text-xs" style={{ color: '#4B5563' }}>
+          © {new Date().getFullYear()} Melissa Velásquez. All rights reserved.
+        </p>
+      </div>
     </footer>
-  );
+  )
 }

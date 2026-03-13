@@ -1,126 +1,67 @@
-﻿import { motion } from "framer-motion";
-import {
-  Leaf,
-  BarChart3,
-  Globe,
-  Landmark,
-  Recycle,
-  Building2,
-  TrendingUp,
-  FileSearch,
-} from "lucide-react";
+import { Leaf, Building2, Landmark, Globe2, BarChart3, Recycle } from "lucide-react";
 import SectionContainer from "../components/SectionContainer";
+import Card from "../components/Card";
 
 const expertiseAreas = [
   {
     icon: Leaf,
-    title: "Estrategia ClimÃ¡tica",
+    title: "Climate Strategy",
     description:
-      "DiseÃ±o de Planes de AcciÃ³n ClimÃ¡tica (PAC), Contribuciones Determinadas a Nivel Nacional (NDC) y marcos de adaptaciÃ³n y mitigaciÃ³n para gobiernos subnacionales y nacionales.",
-    tags: ["NDC", "AdaptaciÃ³n", "MitigaciÃ³n"],
+      "Design of climate action plans, adaptation frameworks, and implementation pathways for public institutions.",
   },
   {
     icon: Building2,
-    title: "Desarrollo Urbano Sostenible",
+    title: "Sustainable Urban Development",
     description:
-      "PlanificaciÃ³n de ciudades resilientes, movilidad sostenible, infraestructura verde y estrategias de resiliencia para municipios y Ã¡reas metropolitanas.",
-    tags: ["Resiliencia Urbana", "ONU-HÃ¡bitat", "Infraestructura Verde"],
+      "Urban resilience planning, mobility transition, and policy tools for sustainable city systems.",
   },
   {
     icon: Landmark,
-    title: "PolÃ­tica Ambiental y RegulaciÃ³n",
+    title: "Environmental Policy",
     description:
-      "DiseÃ±o de marcos normativos ambientales, evaluaciÃ³n de impacto regulatorio y asesorÃ­a para la implementaciÃ³n de legislaciÃ³n climÃ¡tica nacional e internacional.",
-    tags: ["RegulaciÃ³n", "EvaluaciÃ³n de Impacto", "Normativa"],
+      "Regulatory analysis and policy advisory to align climate goals with institutional and legal frameworks.",
   },
   {
-    icon: Globe,
-    title: "CooperaciÃ³n Internacional",
+    icon: Globe2,
+    title: "International Cooperation",
     description:
-      "GestiÃ³n de proyectos con organismos multilaterales: PNUD, BID, ONU-HÃ¡bitat, GEF y agencias de cooperaciÃ³n al desarrollo. FormulaciÃ³n de propuestas y coordinaciÃ³n interinstitucional.",
-    tags: ["PNUD", "BID", "GEF"],
+      "Technical collaboration with multilateral and development organizations across regional programs.",
   },
   {
     icon: BarChart3,
-    title: "EconomÃ­a Ambiental",
+    title: "Environmental Economics",
     description:
-      "ValoraciÃ³n econÃ³mica de servicios ecosistÃ©micos, anÃ¡lisis costo-beneficio ambiental, instrumentos econÃ³micos para la polÃ­tica climÃ¡tica y evaluaciÃ³n de externalidades.",
-    tags: ["ValoraciÃ³n", "Costo-Beneficio", "Mercados de Carbono"],
-  },
-  {
-    icon: TrendingUp,
-    title: "Financiamiento ClimÃ¡tico",
-    description:
-      "EstructuraciÃ³n de mecanismos de financiamiento verde, acceso a fondos climÃ¡ticos (GCF, GEF, BID) y diseÃ±o de instrumentos de deuda sostenible para proyectos urbanos y sectoriales.",
-    tags: ["GCF", "Bonos Verdes", "Blended Finance"],
+      "Economic valuation, impact analysis, and evidence generation for climate and sustainability decisions.",
   },
   {
     icon: Recycle,
-    title: "EconomÃ­a Circular",
+    title: "Circular Economy",
     description:
-      "DiseÃ±o de estrategias de transiciÃ³n hacia modelos de producciÃ³n y consumo sostenibles, gestiÃ³n integral de residuos, simbiosis industrial y eficiencia de recursos.",
-    tags: ["Ellen MacArthur", "Residuos", "Simbiosis Industrial"],
-  },
-  {
-    icon: FileSearch,
-    title: "Sostenibilidad Corporativa (ESG)",
-    description:
-      "Desarrollo de estrategias ESG, elaboraciÃ³n de reportes de sostenibilidad bajo frameworks GRI, TCFD y CDP, y asesorÃ­a en due diligence ambiental para empresas e inversores.",
-    tags: ["GRI", "TCFD", "CDP"],
+      "Design of transition models for resource efficiency, waste management, and circular production systems.",
   },
 ];
 
 export default function Expertise() {
   return (
-    <div className="pt-20">
-      {/* Page Banner */}
-      <section className="bg-primary-900 py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.04]"
-          style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "28px 28px" }}
-        />
-        <div className="relative mx-auto max-w-7xl px-6">
-          <span className="inline-block text-xs font-semibold uppercase tracking-widest text-primary-300 mb-4">
-            Especialidades
-          </span>
-          <h1 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">
-            Ãreas de Experiencia
+    <div className="pt-28 md:pt-32">
+      <section className="bg-deep-green py-16 md:py-20">
+        <div className="mx-auto max-w-7xl px-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-soft-green">Expertise</p>
+          <h1 className="mt-3 font-serif text-4xl font-semibold text-light-neutral md:text-5xl">
+            Areas of specialization
           </h1>
-          <p className="text-primary-200/70 text-lg max-w-xl leading-relaxed">
-            Combinando economÃ­a, polÃ­tica pÃºblica y ciencia ambiental para impulsar soluciones
-            sostenibles con impacto en el mundo real.
-          </p>
         </div>
       </section>
 
-      <SectionContainer bgColor="bg-earth-50">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {expertiseAreas.map((area, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: (index % 4) * 0.08 }}
-              whileHover={{ y: -4, boxShadow: "0 16px 40px rgba(0,0,0,0.08)" }}
-              className="bg-white rounded-2xl border border-gray-100 p-7 flex flex-col hover:border-primary-200 transition-colors"
-            >
-              <div className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-primary-50 text-primary-700 mb-5">
-                <area.icon className="h-5 w-5" />
-              </div>
-              <h3 className="font-serif text-base font-semibold text-gray-900 mb-2">
-                {area.title}
-              </h3>
-              <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-5">
-                {area.description}
-              </p>
-              <div className="flex flex-wrap gap-1.5 mt-auto">
-                {area.tags.map((tag) => (
-                  <span key={tag} className="px-2.5 py-0.5 text-xs font-medium bg-primary-50 text-primary-700 rounded-full">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+      <SectionContainer bgColor="bg-light-neutral">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {expertiseAreas.map((item) => (
+            <Card
+              key={item.title}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+            />
           ))}
         </div>
       </SectionContainer>

@@ -1,111 +1,107 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', organization: '', subject: '', message: '' })
+  const [sent, setSent] = useState(false)
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Replace with actual form handling (Formspree, EmailJS, etc.)
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
-      <div className="text-center py-12">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 text-primary-600 mb-4">
-          <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        <h3 className="font-serif text-xl font-semibold text-gray-900 mb-2">¡Mensaje enviado!</h3>
-        <p className="text-gray-500">Gracias por contactarme. Responderé lo antes posible.</p>
-      </div>
-    );
+  const handleSubmit = e => {
+    e.preventDefault()
+    // In production: connect to email service / API
+    setSent(true)
   }
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-            Nombre
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm
-                       focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-colors"
-            placeholder="Tu nombre"
-          />
+  if (sent) {
+    return (
+      <div className="text-center py-16">
+        <div className="w-16 h-16 bg-soft-green/30 rounded-full flex items-center justify-center mx-auto mb-5">
+          <span className="text-3xl">✓</span>
         </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-            Correo electrónico
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm
-                       focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-colors"
-            placeholder="correo@ejemplo.com"
-          />
-        </div>
+        <h3 className="font-display text-2xl font-semibold text-dark mb-2">Message Sent!</h3>
+        <p className="text-dark/60 font-body text-sm">
+          Thank you for reaching out. Melissa will respond within 2 business days.
+        </p>
+        <button onClick={() => { setSent(false); setForm({ name:'',email:'',organization:'',subject:'',message:'' }) }}
+          className="mt-6 btn-outline text-sm">
+          Send Another Message
+        </button>
       </div>
+    )
+  }
 
+  const field = (name, label, type = 'text', placeholder = '') => (
+    <div>
+      <label className="block text-xs font-body font-medium text-dark/60 mb-1.5 tracking-wide uppercase">
+        {label}
+      </label>
+      <input
+        type={type}
+        name={name}
+        value={form[name]}
+        onChange={handleChange}
+        placeholder={placeholder}
+        required={['name','email','message'].includes(name)}
+        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
+                   text-sm font-body text-dark placeholder-dark/30
+                   focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+                   transition-all duration-200"
+      />
+    </div>
+  )
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {field('name', 'Full Name', 'text', 'Your name')}
+        {field('email', 'Email Address', 'email', 'your@email.com')}
+      </div>
+      {field('organization', 'Organization / Institution', 'text', 'Optional')}
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-          Asunto
+        <label className="block text-xs font-body font-medium text-dark/60 mb-1.5 tracking-wide uppercase">
+          Subject
         </label>
-        <input
-          type="text"
-          id="subject"
+        <select
           name="subject"
           value={form.subject}
           onChange={handleChange}
-          required
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm
-                     focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-colors"
-          placeholder="Asunto del mensaje"
-        />
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
+                     text-sm font-body text-dark
+                     focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+                     transition-all duration-200"
+        >
+          <option value="">Select a topic...</option>
+          <option>Climate Strategy Consulting</option>
+          <option>Urban Development Project</option>
+          <option>Research Collaboration</option>
+          <option>Speaking Engagement</option>
+          <option>Other Inquiry</option>
+        </select>
       </div>
-
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-          Mensaje
+        <label className="block text-xs font-body font-medium text-dark/60 mb-1.5 tracking-wide uppercase">
+          Message
         </label>
         <textarea
-          id="message"
           name="message"
-          rows={5}
           value={form.message}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm resize-none
-                     focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-400 transition-colors"
-          placeholder="Escribe tu mensaje aquí..."
+          rows={5}
+          placeholder="Describe your project or inquiry..."
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
+                     text-sm font-body text-dark placeholder-dark/30 resize-none
+                     focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+                     transition-all duration-200"
         />
       </div>
-
-      <button
-        type="submit"
-        className="w-full md:w-auto px-8 py-3 bg-primary-700 text-white text-sm font-semibold rounded-xl
-                   hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors cursor-pointer"
-      >
-        Enviar mensaje
+      <button type="submit" className="btn-primary w-full justify-center py-3.5">
+        Send Message
+        <span>→</span>
       </button>
+      <p className="text-xs font-body text-center text-dark/40">
+        Typically responds within 2 business days
+      </p>
     </form>
-  );
+  )
 }

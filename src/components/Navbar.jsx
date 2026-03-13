@@ -1,106 +1,118 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Leaf } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 
-const navLinks = [
-  { to: "/", label: "Inicio" },
-  { to: "/about", label: "Perfil" },
-  { to: "/expertise", label: "Especialidades" },
-  { to: "/projects", label: "Proyectos" },
-  { to: "/education", label: "Educación" },
-  { to: "/awards", label: "Reconocimientos" },
+const NAV_LINKS = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
+  { label: "Expertise", to: "/expertise" },
+  { label: "Projects", to: "/projects" },
+  { label: "Education", to: "/education-research" },
+  { label: "Awards", to: "/awards-certifications" },
 ];
+
+function DesktopLink({ to, label }) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+          isActive
+            ? "bg-[#E8410A] text-white"
+            : "text-gray-400 hover:text-white"
+        }`
+      }
+    >
+      {label}
+    </NavLink>
+  );
+}
+
+function MobileLink({ to, label, onClick }) {
+  return (
+    <NavLink
+      to={to}
+      onClick={onClick}
+      className={({ isActive }) =>
+        `block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+          isActive
+            ? "bg-[#E8410A] text-white"
+            : "text-gray-300 hover:bg-white/10 hover:text-white"
+        }`
+      }
+    >
+      {label}
+    </NavLink>
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 16);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    setOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100"
-          : "bg-white/80 backdrop-blur-sm border-b border-gray-100/60"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-900 text-white">
-            <Leaf className="h-4 w-4" />
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-serif text-base font-semibold text-primary-900 tracking-tight">Melissa Velásquez</span>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-primary-600 hidden sm:block">Economista · Sostenibilidad</span>
-          </div>
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50 px-3 md:px-0">
+      <nav className="mx-0 md:mx-6 mt-4 rounded-full bg-[#111] shadow-2xl">
+        <div className="hidden md:flex items-center justify-between px-10 py-3">
+          <span className="text-white font-bold text-sm tracking-widest uppercase opacity-60">
+            Hello!
+          </span>
 
-        {/* Desktop links */}
-        <ul className="hidden lg:flex items-center gap-0.5">
-          {navLinks.map(({ to, label }) => (
-            <li key={to}>
-              <Link
-                to={to}
-                className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  pathname === to
-                    ? "text-primary-900 bg-primary-50 font-semibold"
-                    : "text-gray-500 hover:text-primary-900 hover:bg-gray-50"
-                }`}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <div className="hidden lg:flex items-center">
-          <Link
-            to="/contact"
-            className="px-5 py-2 bg-primary-900 text-white text-sm font-semibold rounded-lg hover:bg-primary-800 transition-colors"
-          >
-            Contacto
-          </Link>
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      {open && (
-        <div className="lg:hidden border-t border-gray-100 bg-white">
-          <ul className="flex flex-col px-6 py-4 gap-1">
-            {[...navLinks, { to: "/contact", label: "Contacto" }].map(({ to, label }) => (
-              <li key={to}>
-                <Link
-                  to={to}
-                  onClick={() => setOpen(false)}
-                  className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    pathname === to
-                      ? "text-primary-900 bg-primary-50 font-semibold"
-                      : "text-gray-600 hover:text-primary-900 hover:bg-gray-50"
-                  }`}
-                >
-                  {label}
-                </Link>
+          <ul className="flex items-center gap-1">
+            {NAV_LINKS.map((item) => (
+              <li key={item.to}>
+                <DesktopLink to={item.to} label={item.label} />
               </li>
             ))}
           </ul>
+
+          <Link
+            to="/"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs bg-[#E8410A]"
+          >
+            MV
+          </Link>
         </div>
-      )}
+
+        <div className="md:hidden flex items-center justify-between px-5 py-3">
+          <span className="text-white font-bold text-xs tracking-widest uppercase opacity-70">
+            Hello!
+          </span>
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-label="Toggle navigation"
+            aria-expanded={open}
+            className="inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {open && (
+          <div className="md:hidden border-t border-white/10 px-4 pb-4">
+            <ul className="space-y-1 pt-3">
+              {NAV_LINKS.map((item) => (
+                <li key={item.to}>
+                  <MobileLink to={item.to} label={item.label} onClick={() => setOpen(false)} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </nav>
     </header>
   );
 }
