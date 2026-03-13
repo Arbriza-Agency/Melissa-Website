@@ -1,74 +1,90 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-serif: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
 
   --color-deep-green: #1B4332;
-  --color-forest-green: #2D6A4F;
+  --color-forest: #2D6A4F;
   --color-soft-green: #95D5B2;
-  --color-light-neutral: #F8F9FA;
-  --color-dark-gray: #2B2D42;
-
-  /* ──────────────────────────────────────────────
-     Primary green scale
-     900  →  #1B4332  Deep Green    (brand anchor)
-     700  →  #2D6A4F  Forest Green  (brand anchor)
-     300  →  #95D5B2  Soft Green    (brand anchor)
-  ────────────────────────────────────────────── */
-  --color-primary-50:  #edf7f2;
-  --color-primary-100: #d0ebde;
-  --color-primary-200: #a8d9c0;
-  --color-primary-300: #95D5B2;
-  --color-primary-400: #6dbf99;
-  --color-primary-500: #4aa880;
-  --color-primary-600: #388768;
-  --color-primary-700: #2D6A4F;
-  --color-primary-800: #245641;
-  --color-primary-900: #1B4332;
-  --color-primary-950: #0e2219;
-
-  /* ──────────────────────────────────────────────
-     Neutral/earth scale
-     50  →  #F8F9FA  Light Neutral  (brand anchor)
-  ────────────────────────────────────────────── */
-  --color-earth-50:  #F8F9FA;
-  --color-earth-100: #F1F3F5;
-  --color-earth-200: #E9ECEF;
-  --color-earth-300: #DEE2E6;
-  --color-earth-400: #CED4DA;
-  --color-earth-500: #ADB5BD;
-  --color-earth-600: #8D949C;
-  --color-earth-700: #6C757D;
-  --color-earth-800: #495057;
-  --color-earth-900: #343A40;
-  --color-earth-950: #212529;
-
-  /* ──────────────────────────────────────────────
-     Override Tailwind's gray anchors to brand values
-     gray-50   →  #F8F9FA  Light Neutral  (brand)
-     gray-900  →  #2B2D42  Dark Gray      (brand)
-  ────────────────────────────────────────────── */
-  --color-gray-50:  #F8F9FA;
-  --color-gray-900: #2B2D42;
+  --color-light: #F8F9FA;
+  --color-dark: #2B2D42;
 }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-body text-dark bg-light antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3 rounded-full bg-deep-green text-white font-body font-medium text-sm
+           hover:bg-forest transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3 rounded-full border-2 border-deep-green text-deep-green font-body font-medium text-sm
+           hover:bg-deep-green hover:text-white transition-all duration-300;
+  }
+
+  .section-label {
+    @apply text-xs font-body font-medium tracking-[0.2em] uppercase text-forest;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  .nav-link {
+    @apply text-sm font-body font-medium text-dark/70 hover:text-deep-green transition-colors duration-200 relative
+           after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-0.5
+           after:bg-deep-green after:transition-all after:duration-300 hover:after:w-full;
+  }
+
+  .nav-link-active {
+    @apply text-deep-green after:w-full;
+  }
+
+  .page-enter {
+    animation: fadeUp 0.5s ease forwards;
+  }
 }
 
-body {
-  font-family: var(--font-sans);
-  color: #2B2D42;
-  background-color: #F8F9FA;
-  min-width: 320px;
-  min-height: 100vh;
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-deep-green to-forest bg-clip-text text-transparent;
+  }
+
+  .bg-texture {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B4332' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-400 { animation-delay: 400ms; }
 }

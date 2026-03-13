@@ -1,118 +1,81 @@
-import { motion } from "framer-motion";
-import SectionContainer from "../components/SectionContainer";
-import ProjectCard from "../components/ProjectCard";
-import MapComponent from "../components/MapComponent";
+import { useState } from 'react'
+import { projects } from '../data'
+import ProjectCard from '../components/ProjectCard'
+import MapComponent from '../components/MapComponent'
 
-const projects = [
-  {
-    title: "Municipal Climate Action Plan",
-    organization: "City Government / UNDP",
-    description:
-      "Technical leadership in the design of climate action targets, adaptation priorities, and implementation pathways.",
-    location: "Bogota, Colombia",
-    year: "2022-2023",
-    coordinates: [-74.0721, 4.711],
-  },
-  {
-    title: "Urban Resilience Strategy",
-    organization: "UN-Habitat",
-    description:
-      "Support for metropolitan resilience strategies integrating risk assessment, governance, and infrastructure planning.",
-    location: "Mexico City, Mexico",
-    year: "2021-2022",
-    coordinates: [-99.1332, 19.4326],
-  },
-  {
-    title: "Climate Vulnerability Assessment",
-    organization: "World Bank Program",
-    description:
-      "Assessment of climate risks and adaptation policy options for regional and local institutional planning.",
-    location: "Lima, Peru",
-    year: "2020-2021",
-    coordinates: [-77.0428, -12.0464],
-  },
-  {
-    title: "National NDC Update Support",
-    organization: "UNDP / Environment Ministry",
-    description:
-      "Technical assistance for mitigation scenarios, co-benefit analysis, and implementation mechanisms.",
-    location: "Quito, Ecuador",
-    year: "2020",
-    coordinates: [-78.4678, -0.1807],
-  },
-  {
-    title: "Circular Economy Policy Roadmap",
-    organization: "Ecological Transition Program",
-    description:
-      "Gap analysis and implementation roadmap for circular economy policy aligned with European standards.",
-    location: "Madrid, Spain",
-    year: "2019-2020",
-    coordinates: [-3.7038, 40.4168],
-  },
-  {
-    title: "Urban Climate Finance Structuring",
-    organization: "Inter-American Development Bank",
-    description:
-      "Design of financing structures for municipal climate investment and green project pipelines.",
-    location: "Sao Paulo, Brazil",
-    year: "2018-2019",
-    coordinates: [-46.6333, -23.5505],
-  },
-];
+const categories = ['All', ...new Set(projects.map(p => p.category))]
 
 export default function Projects() {
+  const [active, setActive] = useState('All')
+
+  const filtered = active === 'All'
+    ? projects
+    : projects.filter(p => p.category === active)
+
   return (
-    <div className="pt-28 md:pt-32">
-      <section className="bg-deep-green py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-soft-green">Projects</p>
-          <h1 className="mt-3 font-serif text-4xl font-semibold text-light-neutral md:text-5xl">
-            International project portfolio
+    <div className="pt-20">
+
+      {/* Header */}
+      <section className="bg-deep-green text-white py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
+          <p className="section-label text-soft-green">Portfolio</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold">
+            Selected Projects
           </h1>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-light-neutral/75 md:text-base">
-            Work across climate strategy, public policy, and sustainability implementation in multiple regions.
+          <p className="text-white/70 font-body max-w-2xl mx-auto leading-relaxed">
+            A selection of projects spanning climate policy, urban resilience,
+            environmental economics, and international cooperation.
           </p>
         </div>
       </section>
 
-      <SectionContainer bgColor="bg-white">
-        <div className="mb-8 text-center">
-          <h2 className="font-serif text-3xl font-semibold text-dark-gray md:text-4xl">Geographic footprint</h2>
-          <p className="mt-2 text-sm text-gray-500">Click on map markers to see project details.</p>
+      {/* Map */}
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <p className="section-label mb-6">Project Locations</p>
+          <MapComponent />
         </div>
+      </section>
 
-        <MapComponent
-          markers={projects.map((project) => ({
-            coordinates: project.coordinates,
-            title: project.title,
-            organization: project.organization,
-            description: project.description,
-            location: `${project.location} · ${project.year}`,
-          }))}
-        />
-      </SectionContainer>
+      {/* Filter + Grid */}
+      <section className="py-16 px-6 bg-light">
+        <div className="max-w-7xl mx-auto">
 
-      <SectionContainer bgColor="bg-light-neutral">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: (index % 3) * 0.08 }}
-            >
-              <ProjectCard
-                title={project.title}
-                organization={project.organization}
-                description={project.description}
-                location={project.location}
-                year={project.year}
-              />
-            </motion.div>
-          ))}
+          {/* Filter tabs */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className={`px-5 py-2 rounded-full text-sm font-body font-medium transition-all duration-200
+                  ${active === cat
+                    ? 'bg-deep-green text-white shadow-sm'
+                    : 'bg-white text-dark/60 border border-gray-200 hover:border-deep-green hover:text-deep-green'
+                  }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filtered.map((project, i) => (
+              <div key={project.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${i * 60}ms` }}>
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+
+          {filtered.length === 0 && (
+            <div className="text-center py-16 text-dark/40 font-body">
+              No projects in this category yet.
+            </div>
+          )}
         </div>
-      </SectionContainer>
+      </section>
     </div>
-  );
+  )
 }

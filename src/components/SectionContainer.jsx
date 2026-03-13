@@ -1,22 +1,39 @@
-import { motion } from "framer-motion";
-
 export default function SectionContainer({
+  label,
+  title,
+  subtitle,
   children,
-  className = "",
-  id,
-  bgColor = "bg-white",
+  className = '',
+  dark = false,
+  centered = false,
 }) {
   return (
-    <section id={id} className={`${bgColor} ${className}`}>
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="mx-auto max-w-7xl px-6 py-20 md:py-28"
-      >
+    <section className={`py-20 px-6 ${dark ? 'bg-deep-green text-white' : 'bg-light'} ${className}`}>
+      <div className="max-w-7xl mx-auto">
+        {(label || title || subtitle) && (
+          <div className={`mb-14 ${centered ? 'text-center' : ''}`}>
+            {label && (
+              <p className={`section-label mb-3 ${dark ? 'text-soft-green' : ''}`}>
+                {label}
+              </p>
+            )}
+            {title && (
+              <h2 className={`font-display text-3xl md:text-4xl font-bold leading-tight
+                              ${dark ? 'text-white' : 'text-dark'}`}>
+                {title}
+              </h2>
+            )}
+            {subtitle && (
+              <p className={`mt-4 text-base font-body leading-relaxed max-w-2xl
+                             ${centered ? 'mx-auto' : ''}
+                             ${dark ? 'text-white/70' : 'text-dark/60'}`}>
+                {subtitle}
+              </p>
+            )}
+          </div>
+        )}
         {children}
-      </motion.div>
+      </div>
     </section>
-  );
+  )
 }

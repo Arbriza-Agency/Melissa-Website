@@ -1,118 +1,99 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from 'react'
+import { NavLink, Link } from 'react-router-dom'
 
-const NAV_LINKS = [
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Expertise", to: "/expertise" },
-  { label: "Projects", to: "/projects" },
-  { label: "Education", to: "/education-research" },
-  { label: "Awards", to: "/awards-certifications" },
-];
-
-function DesktopLink({ to, label }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        `px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-          isActive
-            ? "bg-[#E8410A] text-white"
-            : "text-gray-400 hover:text-white"
-        }`
-      }
-    >
-      {label}
-    </NavLink>
-  );
-}
-
-function MobileLink({ to, label, onClick }) {
-  return (
-    <NavLink
-      to={to}
-      onClick={onClick}
-      className={({ isActive }) =>
-        `block px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-          isActive
-            ? "bg-[#E8410A] text-white"
-            : "text-gray-300 hover:bg-white/10 hover:text-white"
-        }`
-      }
-    >
-      {label}
-    </NavLink>
-  );
-}
+const links = [
+  { to: '/',          label: 'Home' },
+  { to: '/about',     label: 'About' },
+  { to: '/expertise', label: 'Expertise' },
+  { to: '/projects',  label: 'Projects' },
+  { to: '/education', label: 'Education' },
+  { to: '/awards',    label: 'Awards' },
+  { to: '/contact',   label: 'Contact' },
+]
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    setOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 md:px-0">
-      <nav className="mx-0 md:mx-6 mt-4 rounded-full bg-[#111] shadow-2xl">
-        <div className="hidden md:flex items-center justify-between px-10 py-3">
-          <span className="text-white font-bold text-sm tracking-widest uppercase opacity-60">
-            Hello!
-          </span>
+    <header className="fixed top-0 left-0 right-0 z-50 px-6 pt-4 pb-2">
+      {/* Pill navbar */}
+      <div
+        className={`max-w-5xl mx-auto flex items-center justify-between
+                    px-6 py-2.5 rounded-full transition-all duration-300
+                    ${scrolled ? 'shadow-2xl' : 'shadow-xl'}`}
+        style={{ background: '#1B4332' }}
+      >
+        <span className="text-soft-green text-xs font-bold tracking-[0.2em] uppercase opacity-90 hidden sm:block">
+          Hello!
+        </span>
 
-          <ul className="flex items-center gap-1">
-            {NAV_LINKS.map((item) => (
-              <li key={item.to}>
-                <DesktopLink to={item.to} label={item.label} />
-              </li>
-            ))}
-          </ul>
+        <nav className="hidden md:flex items-center gap-0.5">
+          {links.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              className={({ isActive }) =>
+                `px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200
+                 ${isActive ? 'text-white' : 'text-soft-green/80 hover:text-white'}`
+              }
+              style={({ isActive }) => isActive ? { background: '#2D6A4F' } : {}}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
 
-          <Link
-            to="/"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs bg-[#E8410A]"
-          >
-            MV
-          </Link>
-        </div>
+        <Link
+          to="/"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-deep-green font-bold text-xs shrink-0"
+          style={{ background: '#95D5B2' }}
+        >
+          MV
+        </Link>
 
-        <div className="md:hidden flex items-center justify-between px-5 py-3">
-          <span className="text-white font-bold text-xs tracking-widest uppercase opacity-70">
-            Hello!
-          </span>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden flex flex-col gap-1.5 p-1.5 ml-3"
+          aria-label="Toggle menu"
+        >
+          <span className={`block w-5 h-0.5 bg-soft-green transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-soft-green transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+          <span className={`block w-5 h-0.5 bg-soft-green transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </button>
+      </div>
 
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-label="Toggle navigation"
-            aria-expanded={open}
-            className="inline-flex items-center justify-center rounded-full border border-white/10 p-2 text-white"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-
-        {open && (
-          <div className="md:hidden border-t border-white/10 px-4 pb-4">
-            <ul className="space-y-1 pt-3">
-              {NAV_LINKS.map((item) => (
-                <li key={item.to}>
-                  <MobileLink to={item.to} label={item.label} onClick={() => setOpen(false)} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </nav>
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden max-w-5xl mx-auto mt-2 rounded-2xl overflow-hidden transition-all duration-300
+                    ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+        style={{ background: '#1B4332' }}
+      >
+        <nav className="flex flex-col gap-1 p-3">
+          {links.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200
+                 ${isActive ? 'text-white' : 'text-soft-green/80 hover:text-white'}`
+              }
+              style={({ isActive }) => isActive ? { background: '#2D6A4F' } : {}}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
     </header>
-  );
+  )
 }

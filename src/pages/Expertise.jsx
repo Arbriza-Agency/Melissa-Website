@@ -1,70 +1,89 @@
-import { Leaf, Building2, Landmark, Globe2, BarChart3, Recycle } from "lucide-react";
-import SectionContainer from "../components/SectionContainer";
-import Card from "../components/Card";
-
-const expertiseAreas = [
-  {
-    icon: Leaf,
-    title: "Climate Strategy",
-    description:
-      "Design of climate action plans, adaptation frameworks, and implementation pathways for public institutions.",
-  },
-  {
-    icon: Building2,
-    title: "Sustainable Urban Development",
-    description:
-      "Urban resilience planning, mobility transition, and policy tools for sustainable city systems.",
-  },
-  {
-    icon: Landmark,
-    title: "Environmental Policy",
-    description:
-      "Regulatory analysis and policy advisory to align climate goals with institutional and legal frameworks.",
-  },
-  {
-    icon: Globe2,
-    title: "International Cooperation",
-    description:
-      "Technical collaboration with multilateral and development organizations across regional programs.",
-  },
-  {
-    icon: BarChart3,
-    title: "Environmental Economics",
-    description:
-      "Economic valuation, impact analysis, and evidence generation for climate and sustainability decisions.",
-  },
-  {
-    icon: Recycle,
-    title: "Circular Economy",
-    description:
-      "Design of transition models for resource efficiency, waste management, and circular production systems.",
-  },
-];
+import SectionContainer from '../components/SectionContainer'
+import { expertise, partners } from '../data'
+import { Link } from 'react-router-dom'
 
 export default function Expertise() {
   return (
-    <div className="pt-28 md:pt-32">
-      <section className="bg-deep-green py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-soft-green">Expertise</p>
-          <h1 className="mt-3 font-serif text-4xl font-semibold text-light-neutral md:text-5xl">
-            Areas of specialization
+    <div className="pt-20">
+
+      {/* Header */}
+      <section className="bg-deep-green text-white py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
+          <p className="section-label text-soft-green">Expertise</p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold">
+            Policy-Oriented Sustainability Expertise
           </h1>
+          <p className="text-white/70 font-body max-w-2xl mx-auto leading-relaxed">
+            Eight years of applied work across climate strategy, urban development,
+            environmental economics, and international cooperation.
+          </p>
         </div>
       </section>
 
-      <SectionContainer bgColor="bg-light-neutral">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {expertiseAreas.map((item) => (
-            <Card
-              key={item.title}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-            />
+      {/* Expertise cards */}
+      <SectionContainer label="Areas of Practice" title="Core Competencies"
+                        subtitle="Specialized knowledge developed through projects with governments, multilateral banks, and international organizations.">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {expertise.map((item, i) => (
+            <div key={item.title}
+              className="group bg-white rounded-2xl p-7 border border-gray-100 shadow-sm
+                         card-hover animate-fade-up"
+              style={{ animationDelay: `${i * 80}ms` }}>
+              <div className="w-14 h-14 rounded-2xl bg-deep-green/8 flex items-center
+                              justify-center text-3xl mb-5">
+                {item.icon}
+              </div>
+              <h3 className="font-display font-semibold text-lg text-dark mb-3">
+                {item.title}
+              </h3>
+              <p className="text-sm font-body text-dark/60 leading-relaxed mb-5">
+                {item.description}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {item.skills.map(skill => (
+                  <span key={skill}
+                    className="text-xs font-body px-2.5 py-1 rounded-full
+                               bg-deep-green/8 text-deep-green font-medium">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 h-0.5 w-8 rounded-full bg-soft-green
+                              transition-all duration-300 group-hover:w-16" />
+            </div>
           ))}
         </div>
       </SectionContainer>
+
+      {/* Partners */}
+      <section className="py-16 px-6 bg-white border-y border-gray-100">
+        <div className="max-w-7xl mx-auto">
+          <p className="section-label text-center mb-8">Organizations & Clients</p>
+          <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+            {partners.map(p => (
+              <span key={p}
+                className="text-base font-body font-semibold text-dark/40
+                           hover:text-deep-green transition-colors cursor-default">
+                {p}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 px-6 bg-light text-center">
+        <div className="max-w-xl mx-auto space-y-4">
+          <h2 className="font-display text-2xl font-semibold text-dark">
+            Need expertise for your project?
+          </h2>
+          <p className="font-body text-dark/60 text-sm leading-relaxed">
+            Available for consulting engagements, technical advisory roles,
+            and research collaborations.
+          </p>
+          <Link to="/contact" className="btn-primary">Get in Touch →</Link>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
