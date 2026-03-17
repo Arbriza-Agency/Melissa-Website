@@ -7,13 +7,13 @@ export default function Expertise() {
     <div className="pt-20">
 
       {/* Header */}
-      <section className="bg-deep-green text-white py-20 px-6">
+      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
           <p className="section-label text-soft-green">Expertise</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
             Policy-Oriented Sustainability Expertise
           </h1>
-          <p className="text-white/70 font-body max-w-2xl mx-auto leading-relaxed">
+          <p className="text-dark/70 font-body max-w-2xl mx-auto leading-relaxed">
             Eight years of applied work across climate strategy, urban development,
             environmental economics, and international cooperation.
           </p>
@@ -26,24 +26,24 @@ export default function Expertise() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {expertise.map((item, i) => (
             <div key={item.title}
-              className="group bg-white rounded-2xl p-7 border border-gray-100 shadow-sm
+              className="group bg-forest/80 rounded-2xl p-7 border border-white/10 shadow-sm
                          card-hover animate-fade-up"
               style={{ animationDelay: `${i * 80}ms` }}>
-              <div className="w-14 h-14 rounded-2xl bg-deep-green/8 flex items-center
-                              justify-center text-3xl mb-5">
+              <div className="w-14 h-14 rounded-2xl bg-soft-green/10 border border-soft-green/20 flex items-center
+                              justify-center text-3xl mb-5 text-soft-green">
                 {item.icon}
               </div>
               <h3 className="font-display font-semibold text-lg text-dark mb-3">
                 {item.title}
               </h3>
-              <p className="text-sm font-body text-dark/60 leading-relaxed mb-5">
+              <p className="text-sm font-body text-dark/70 leading-relaxed mb-5">
                 {item.description}
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {item.skills.map(skill => (
                   <span key={skill}
                     className="text-xs font-body px-2.5 py-1 rounded-full
-                               bg-deep-green/8 text-deep-green font-medium">
+                               bg-white/5 text-dark/80 font-medium border border-white/10">
                     {skill}
                   </span>
                 ))}
@@ -56,14 +56,14 @@ export default function Expertise() {
       </SectionContainer>
 
       {/* Partners */}
-      <section className="py-16 px-6 bg-white border-y border-gray-100">
+      <section data-reveal className="py-16 px-6 bg-light border-y border-white/10">
         <div className="max-w-7xl mx-auto">
           <p className="section-label text-center mb-8">Organizations & Clients</p>
           <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
             {partners.map(p => (
               <span key={p}
                 className="text-base font-body font-semibold text-dark/40
-                           hover:text-deep-green transition-colors cursor-default">
+                           hover:text-soft-green transition-colors cursor-default">
                 {p}
               </span>
             ))}
@@ -72,7 +72,7 @@ export default function Expertise() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6 bg-light text-center">
+      <section data-reveal className="py-16 px-6 bg-light text-center">
         <div className="max-w-xl mx-auto space-y-4">
           <h2 className="font-display text-2xl font-semibold text-dark">
             Need expertise for your project?

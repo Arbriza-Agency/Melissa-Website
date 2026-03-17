@@ -1,13 +1,13 @@
 const typeStyles = {
-  education:   { dot: 'bg-deep-green', label: 'Degree', labelStyle: 'bg-deep-green/10 text-deep-green' },
-  certificate: { dot: 'bg-forest',     label: 'Certificate', labelStyle: 'bg-forest/10 text-forest' },
+  education:   { dot: 'bg-soft-green', label: 'Degree', labelStyle: 'bg-soft-green/10 text-soft-green border border-soft-green/20' },
+  certificate: { dot: 'bg-soft-green', label: 'Certificate', labelStyle: 'bg-soft-green/10 text-soft-green border border-soft-green/20' },
 }
 
 export default function Timeline({ items }) {
   return (
     <div className="relative">
       {/* Vertical line */}
-      <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-gray-200 -translate-x-1/2" />
+      <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
 
       <div className="space-y-10">
         {items.map((item, i) => {
@@ -31,7 +31,7 @@ export default function Timeline({ items }) {
 
               {/* Card */}
               <div className={`ml-12 md:ml-0 md:w-1/2 ${isLeft ? 'md:pr-12' : 'md:pl-12'}`}>
-                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6
+                <div className="bg-forest/80 rounded-2xl border border-white/10 shadow-sm p-6
                                 hover:shadow-md transition-shadow duration-300">
                   <div className="flex items-center justify-between flex-wrap gap-2 mb-3">
                     <span className="text-xs font-body font-medium text-dark/50 tracking-wide">
@@ -45,7 +45,7 @@ export default function Timeline({ items }) {
                   <h3 className="font-display font-semibold text-dark text-lg leading-snug mb-1">
                     {item.degree}
                   </h3>
-                  <p className="text-sm font-body font-medium text-forest mb-1">
+                  <p className="text-sm font-body font-medium text-soft-green mb-1">
                     {item.institution}
                   </p>
                   <p className="text-xs font-body text-dark/40 mb-3">

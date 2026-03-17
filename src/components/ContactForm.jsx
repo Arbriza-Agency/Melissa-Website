@@ -42,9 +42,9 @@ export default function ContactForm() {
         onChange={handleChange}
         placeholder={placeholder}
         required={['name','email','message'].includes(name)}
-        className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
-                   text-sm font-body text-dark placeholder-dark/30
-                   focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+        className="w-full px-4 py-3 rounded-xl border border-white/10 bg-forest/70
+                   text-sm font-body text-dark placeholder:text-dark/40
+                   focus:outline-none focus:ring-2 focus:ring-soft-green/25 focus:border-soft-green/40
                    transition-all duration-200"
       />
     </div>
@@ -65,9 +65,9 @@ export default function ContactForm() {
           name="subject"
           value={form.subject}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
+          className="w-full px-4 py-3 rounded-xl border border-white/10 bg-forest/70
                      text-sm font-body text-dark
-                     focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+                     focus:outline-none focus:ring-2 focus:ring-soft-green/25 focus:border-soft-green/40
                      transition-all duration-200"
         >
           <option value="">Select a topic...</option>
@@ -89,9 +89,9 @@ export default function ContactForm() {
           required
           rows={5}
           placeholder="Describe your project or inquiry..."
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white
-                     text-sm font-body text-dark placeholder-dark/30 resize-none
-                     focus:outline-none focus:ring-2 focus:ring-deep-green/30 focus:border-deep-green
+          className="w-full px-4 py-3 rounded-xl border border-white/10 bg-forest/70
+                     text-sm font-body text-dark placeholder:text-dark/40 resize-none
+                     focus:outline-none focus:ring-2 focus:ring-soft-green/25 focus:border-soft-green/40
                      transition-all duration-200"
         />
       </div>

@@ -16,13 +16,13 @@ export default function Projects() {
     <div className="pt-20">
 
       {/* Header */}
-      <section className="bg-deep-green text-white py-20 px-6">
+      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
           <p className="section-label text-soft-green">Portfolio</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
             Selected Projects
           </h1>
-          <p className="text-white/70 font-body max-w-2xl mx-auto leading-relaxed">
+          <p className="text-dark/70 font-body max-w-2xl mx-auto leading-relaxed">
             A selection of projects spanning climate policy, urban resilience,
             environmental economics, and international cooperation.
           </p>
@@ -30,7 +30,7 @@ export default function Projects() {
       </section>
 
       {/* Map */}
-      <section className="py-16 px-6 bg-white">
+      <section data-reveal className="py-16 px-6 bg-light border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <p className="section-label mb-6">Project Locations</p>
           <MapComponent />
@@ -38,7 +38,7 @@ export default function Projects() {
       </section>
 
       {/* Filter + Grid */}
-      <section className="py-16 px-6 bg-light">
+      <section data-reveal className="py-16 px-6 bg-light">
         <div className="max-w-7xl mx-auto">
 
           {/* Filter tabs */}
@@ -49,8 +49,8 @@ export default function Projects() {
                 onClick={() => setActive(cat)}
                 className={`px-5 py-2 rounded-full text-sm font-body font-medium transition-all duration-200
                   ${active === cat
-                    ? 'bg-deep-green text-white shadow-sm'
-                    : 'bg-white text-dark/60 border border-gray-200 hover:border-deep-green hover:text-deep-green'
+                    ? 'bg-soft-green text-deep-green shadow-sm'
+                    : 'bg-forest/80 text-dark/75 border border-white/10 hover:border-soft-green/30 hover:text-dark'
                   }`}
               >
                 {cat}
@@ -70,7 +70,7 @@ export default function Projects() {
           </div>
 
           {filtered.length === 0 && (
-            <div className="text-center py-16 text-dark/40 font-body">
+            <div className="text-center py-16 text-dark/50 font-body">
               No projects in this category yet.
             </div>
           )}

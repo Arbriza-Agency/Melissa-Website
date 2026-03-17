@@ -2,7 +2,7 @@ export default function Card({ children, className = '', hover = true, padding =
   return (
     <div
       className={`
-        bg-white rounded-2xl border border-gray-100 shadow-sm
+        bg-forest/80 rounded-2xl border border-white/10 shadow-sm
         ${hover ? 'card-hover cursor-default' : ''}
         ${padding ? 'p-7' : ''}
         ${className}

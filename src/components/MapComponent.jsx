@@ -7,16 +7,16 @@ const LIVED_WORKED = ['United States', 'El Salvador', 'France', 'Armenia']
 const PROFESSIONAL = ['Mexico', 'Colombia', 'Ecuador', 'Chile', 'Argentina', 'Jamaica']
 
 const COUNTRY_COLORS = {
-  'United States': '#4A72B0',
-  'El Salvador': '#C0724A',
-  'France': '#C0724A',
-  'Armenia': '#7B5EA7',
-  'Mexico': '#7A9E5C',
-  'Colombia': '#7A9E5C',
-  'Ecuador': '#7A9E5C',
-  'Chile': '#7A9E5C',
-  'Argentina': '#A8C47A',
-  'Jamaica': '#A8C47A',
+  'United States': '#C4A882',
+  'El Salvador': '#C4A882',
+  'France': '#C4A882',
+  'Armenia': '#C4A882',
+  'Mexico': '#8E6F48',
+  'Colombia': '#8E6F48',
+  'Ecuador': '#8E6F48',
+  'Chile': '#8E6F48',
+  'Argentina': '#B89362',
+  'Jamaica': '#B89362',
 }
 
 // Approximate country paths in SVG viewBox 0 0 1000 500
@@ -34,7 +34,7 @@ const COUNTRIES = [
     path: 'M 90 95 L 115 90 L 120 100 L 118 110 L 108 115 L 95 112 L 88 105 Z',
     labelX: 0,
     labelY: 0,
-    color: '#4A72B0',
+    color: '#C4A882',
   },
   {
     id: 'canada',
@@ -309,7 +309,7 @@ export default function MapComponent() {
 
   return (
     <div style={{
-      background: '#F5F2EE',
+      background: '#0F0F0E',
       borderRadius: '12px',
       padding: '32px',
       fontFamily: "'Georgia', 'Times New Roman', serif",
@@ -321,7 +321,7 @@ export default function MapComponent() {
         <h2 style={{
           fontSize: '28px',
           fontWeight: '400',
-          color: '#2C2C2C',
+          color: 'rgba(245,241,234,0.78)',
           margin: '0 0 12px 0',
           letterSpacing: '0.02em',
         }}>Global Experience</h2>
@@ -346,14 +346,14 @@ export default function MapComponent() {
       </div>
 
       {/* Map */}
-      <div style={{ position: 'relative', background: '#D6E8F0', borderRadius: '8px', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', background: '#0F0F0E', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(196,168,130,0.18)' }}>
         <svg
           viewBox="0 0 1000 500"
           style={{ width: '100%', display: 'block' }}
           xmlns="http://www.w3.org/2000/svg"
         >
           {/* Ocean */}
-          <rect width="1000" height="500" fill="#D6E8F0" />
+          <rect width="1000" height="500" fill="#0F0F0E" />
 
           {/* Countries */}
           {COUNTRIES.map((country) => {
@@ -365,7 +365,7 @@ export default function MapComponent() {
                 key={country.id}
                 d={country.path}
                 fill={color}
-                stroke="#F5F2EE"
+                stroke="rgba(245,241,234,0.10)"
                 strokeWidth="1"
                 opacity={isHovered ? 0.85 : 1}
                 style={{ cursor: isHighlighted ? 'pointer' : 'default', transition: 'opacity 0.2s' }}
@@ -390,48 +390,48 @@ export default function MapComponent() {
           ].map(pin => (
             <g key={pin.name}>
               {pin.ring && (
-                <circle cx={pin.cx} cy={pin.cy} r="5" fill="white" stroke="#4A6FA5" strokeWidth="1.5" />
+                <circle cx={pin.cx} cy={pin.cy} r="5" fill="#0F0F0E" stroke="#C4A882" strokeWidth="1.5" />
               )}
               {!pin.ring && (
-                <circle cx={pin.cx} cy={pin.cy} r="5" fill="white" stroke="#5A8A3C" strokeWidth="1.5" />
+                <circle cx={pin.cx} cy={pin.cy} r="5" fill="#0F0F0E" stroke="#8E6F48" strokeWidth="1.5" />
               )}
               <circle
                 cx={pin.cx}
                 cy={pin.cy}
                 r="2.5"
-                fill={pin.ring ? '#4A6FA5' : '#5A8A3C'}
+                fill={pin.ring ? '#C4A882' : '#8E6F48'}
               />
             </g>
           ))}
 
           {/* Labels */}
           {/* United States */}
-          <line x1="190" y1="148" x2="165" y2="148" stroke="#333" strokeWidth="0.8" />
-          <circle cx="165" cy="148" r="1.5" fill="#333" />
-          <text x="162" y="146" textAnchor="end" fontSize="9" fontFamily="Georgia, serif" fill="#2C2C2C" fontWeight="500">United States</text>
+          <line x1="190" y1="148" x2="165" y2="148" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
+          <circle cx="165" cy="148" r="1.5" fill="rgba(245,241,234,0.6)" />
+          <text x="162" y="146" textAnchor="end" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">United States</text>
 
           {/* El Salvador */}
-          <line x1="178" y1="211" x2="140" y2="222" stroke="#333" strokeWidth="0.8" />
-          <circle cx="140" cy="222" r="1.5" fill="#333" />
-          <text x="137" y="220" textAnchor="end" fontSize="9" fontFamily="Georgia, serif" fill="#2C2C2C" fontWeight="500">El Salvador</text>
+          <line x1="178" y1="211" x2="140" y2="222" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
+          <circle cx="140" cy="222" r="1.5" fill="rgba(245,241,234,0.6)" />
+          <text x="137" y="220" textAnchor="end" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">El Salvador</text>
 
           {/* France */}
-          <line x1="462" y1="135" x2="505" y2="125" stroke="#333" strokeWidth="0.8" />
-          <circle cx="505" cy="125" r="1.5" fill="#333" />
-          <text x="508" y="124" textAnchor="start" fontSize="9" fontFamily="Georgia, serif" fill="#2C2C2C" fontWeight="500">France</text>
+          <line x1="462" y1="135" x2="505" y2="125" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
+          <circle cx="505" cy="125" r="1.5" fill="rgba(245,241,234,0.6)" />
+          <text x="508" y="124" textAnchor="start" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">France</text>
 
           {/* Armenia */}
-          <line x1="562" y1="156" x2="600" y2="158" stroke="#333" strokeWidth="0.8" />
-          <circle cx="600" cy="158" r="1.5" fill="#333" />
-          <text x="603" y="157" textAnchor="start" fontSize="9" fontFamily="Georgia, serif" fill="#2C2C2C" fontWeight="500">Armenia</text>
+          <line x1="562" y1="156" x2="600" y2="158" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
+          <circle cx="600" cy="158" r="1.5" fill="rgba(245,241,234,0.6)" />
+          <text x="603" y="157" textAnchor="start" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">Armenia</text>
 
           {/* Latin America group label */}
-          <line x1="168" y1="178" x2="135" y2="268" stroke="#333" strokeWidth="0.8" />
-          <circle cx="135" cy="268" r="1.5" fill="#333" />
-          <text x="132" y="268" textAnchor="end" fontSize="8.5" fontFamily="Georgia, serif" fill="#2C2C2C">México, Colombia,</text>
-          <text x="132" y="279" textAnchor="end" fontSize="8.5" fontFamily="Georgia, serif" fill="#2C2C2C">Ecuador, Chile,</text>
-          <text x="132" y="290" textAnchor="end" fontSize="8.5" fontFamily="Georgia, serif" fill="#2C2C2C">Argentina,</text>
-          <text x="132" y="301" textAnchor="end" fontSize="8.5" fontFamily="Georgia, serif" fill="#2C2C2C">Montego Bay, Jamaica</text>
+          <line x1="168" y1="178" x2="135" y2="268" stroke="rgba(245,241,234,0.28)" strokeWidth="0.8" />
+          <circle cx="135" cy="268" r="1.5" fill="rgba(245,241,234,0.55)" />
+          <text x="132" y="268" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">México, Colombia,</text>
+          <text x="132" y="279" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Ecuador, Chile,</text>
+          <text x="132" y="290" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Argentina,</text>
+          <text x="132" y="301" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Montego Bay, Jamaica</text>
 
           {/* Hover tooltip */}
           {hovered && (
@@ -447,7 +447,7 @@ export default function MapComponent() {
                 y={LABEL_POSITIONS[hovered] ? LABEL_POSITIONS[hovered].lineY - 3 : 215}
                 textAnchor="middle"
                 fontSize="8"
-                fontFamily="Georgia, serif"
+                fontFamily="Montserrat, system-ui, sans-serif"
                 fill="white"
               >{hovered}</text>
             </g>
@@ -466,19 +466,19 @@ export default function MapComponent() {
         {/* Lived & Worked */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#4A72B0', border: '1.5px solid #3A5A90' }} />
-            <span style={{ fontSize: '12px', fontFamily: 'Georgia, serif', color: '#333', fontWeight: '600' }}>Lived &amp; Worked in:</span>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#C4A882', border: '1.5px solid rgba(196,168,130,0.55)' }} />
+            <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.78)', fontWeight: '600' }}>Lived &amp; Worked in:</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 24px', paddingLeft: '6px' }}>
             {[
-              { label: 'United States', color: '#4A72B0' },
-              { label: 'El Salvador', color: '#C0724A' },
-              { label: 'France', color: '#C0724A' },
-              { label: 'Armenia', color: '#7B5EA7' },
+              { label: 'United States', color: '#C4A882' },
+              { label: 'El Salvador', color: '#C4A882' },
+              { label: 'France', color: '#C4A882' },
+              { label: 'Armenia', color: '#C4A882' },
             ].map(item => (
               <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <div style={{ width: '12px', height: '12px', borderRadius: '2px', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '12px', fontFamily: 'Georgia, serif', color: '#444' }}>{item.label}</span>
+                <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.72)' }}>{item.label}</span>
               </div>
             ))}
           </div>
@@ -487,17 +487,17 @@ export default function MapComponent() {
         {/* Professional */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#7A9E5C', border: '1.5px solid #5A8A3C' }} />
-            <span style={{ fontSize: '12px', fontFamily: 'Georgia, serif', color: '#333', fontWeight: '600' }}>Professional Experience in:</span>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#8E6F48', border: '1.5px solid rgba(142,111,72,0.55)' }} />
+            <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.78)', fontWeight: '600' }}>Professional Experience in:</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', paddingLeft: '6px' }}>
             {[
-              { label: 'Mexico, Colombia, Ecuador · Chile', color: '#7A9E5C' },
-              { label: 'Argentina · Montego Bay, Jamaica', color: '#A8C47A' },
+              { label: 'Mexico, Colombia, Ecuador · Chile', color: '#8E6F48' },
+              { label: 'Argentina · Montego Bay, Jamaica', color: '#B89362' },
             ].map(item => (
               <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <div style={{ width: '12px', height: '12px', borderRadius: '2px', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '12px', fontFamily: 'Georgia, serif', color: '#444' }}>{item.label}</span>
+                <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.72)' }}>{item.label}</span>
               </div>
             ))}
           </div>

@@ -18,7 +18,7 @@ const focus = [
 
 export default function Footer() {
   return (
-    <footer className="text-white py-14 px-10" style={{ background: '#1B4332' }}>
+    <footer className="text-white py-14 px-10 bg-deep-green bg-texture">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
 
         {/* Brand */}
@@ -31,14 +31,14 @@ export default function Footer() {
             Professional profile for policy-oriented consulting and research collaboration.
           </p>
           <div className="space-y-1.5 text-sm text-soft-green/80 font-body">
-            <p className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
-              <span>✉</span> melissa.velasquez@consultoria.com
-            </p>
-            <p className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
-              <span>🔗</span> linkedin.com/in/melissavelasquez
-            </p>
+            <a className="flex items-center gap-2 hover:text-white transition-colors" href="mailto:melissa.velasquez@consultoria.com">
+              <span aria-hidden="true">✉</span> melissa.velasquez@consultoria.com
+            </a>
+            <a className="flex items-center gap-2 hover:text-white transition-colors" href="https://linkedin.com/in/melissavelasquez" target="_blank" rel="noreferrer">
+              <span aria-hidden="true">🔗</span> linkedin.com/in/melissavelasquez
+            </a>
             <p className="flex items-center gap-2">
-              <span>📍</span> Bogotá, Colombia · Remote Available
+              <span aria-hidden="true">📍</span> Bogotá, Colombia · Remote Available
             </p>
           </div>
         </div>
@@ -72,7 +72,7 @@ export default function Footer() {
               <li key={f} className="flex items-center gap-2.5">
                 <span
                   className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ background: '#95D5B2' }}
+                  style={{ background: '#C4A882' }}
                 />
                 <span className="text-sm text-soft-green/80 font-body">{f}</span>
               </li>

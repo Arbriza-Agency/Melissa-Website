@@ -14,13 +14,13 @@ export default function About() {
     <div className="pt-20">
 
       {/* ── HEADER ── */}
-      <section className="bg-deep-green text-white py-20 px-6">
+      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
         <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
           <p className="section-label text-soft-green">About</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
             Melissa Velásquez
           </h1>
-          <p className="text-white/70 font-body text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-dark/70 font-body text-lg max-w-2xl mx-auto leading-relaxed">
             Economist working at the intersection of climate strategy, economic systems,
             and urban development.
           </p>
@@ -33,22 +33,22 @@ export default function About() {
           {/* Portrait */}
           <div className="relative">
             <div className="w-full aspect-[4/5] max-w-sm mx-auto rounded-3xl overflow-hidden
-                            bg-gradient-to-br from-soft-green/30 to-deep-green/20
-                            border border-soft-green/30 flex items-end justify-center shadow-lg">
-              <div className="text-center pb-10 text-deep-green/40">
-                <svg className="w-32 h-32 mx-auto mb-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                </svg>
-                <p className="text-sm font-body">Professional Portrait</p>
-              </div>
+                            bg-forest/70 border border-soft-green/20 shadow-lg">
+              <img
+                src="/media/home/portrait.png"
+                alt="Melissa Velásquez"
+                className="w-full h-full object-cover object-center"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             {/* Floating stats */}
             <div className="absolute -bottom-4 -right-4 sm:right-8 grid grid-cols-2 gap-3">
               {stats.map(({ value, label }) => (
-                <div key={label} className="bg-white rounded-xl px-4 py-3 shadow-lg
-                                            border border-gray-100 text-center">
-                  <p className="font-display font-bold text-xl text-deep-green">{value}</p>
-                  <p className="text-xs font-body text-dark/50">{label}</p>
+                <div key={label} className="bg-forest/80 rounded-xl px-4 py-3 shadow-lg
+                                            border border-white/10 text-center">
+                  <p className="font-display font-bold text-xl text-soft-green">{value}</p>
+                  <p className="text-xs font-body text-dark/60">{label}</p>
                 </div>
               ))}
             </div>
@@ -85,23 +85,23 @@ export default function About() {
       </SectionContainer>
 
       {/* ── VALUES ── */}
-      <SectionContainer label="Approach" title="How I Work" className="bg-white">
+      <SectionContainer label="Approach" title="How I Work" className="bg-forest">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {values.map((v, i) => (
             <div key={v.title}
-              className="p-6 rounded-2xl bg-light border border-gray-100 card-hover
+              className="p-6 rounded-2xl bg-forest/80 border border-white/10 card-hover
                          animate-fade-up"
               style={{ animationDelay: `${i * 80}ms` }}>
-              <div className="text-3xl mb-4">{v.icon}</div>
+              <div className="text-3xl mb-4 text-soft-green">{v.icon}</div>
               <h3 className="font-display font-semibold text-dark mb-2">{v.title}</h3>
-              <p className="text-sm font-body text-dark/60 leading-relaxed">{v.desc}</p>
+              <p className="text-sm font-body text-dark/70 leading-relaxed">{v.desc}</p>
             </div>
           ))}
         </div>
       </SectionContainer>
 
       {/* ── CONTACT STRIP ── */}
-      <section className="bg-deep-green/5 border-y border-gray-100 py-12 px-6">
+      <section data-reveal className="bg-forest/40 border-y border-white/10 py-12 px-6">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center
                         justify-between gap-6">
           <div>

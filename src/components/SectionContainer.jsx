@@ -1,3 +1,5 @@
+import { motion, useReducedMotion } from 'framer-motion'
+
 export default function SectionContainer({
   label,
   title,
@@ -7,8 +9,17 @@ export default function SectionContainer({
   dark = false,
   centered = false,
 }) {
+  const reduceMotion = useReducedMotion()
+  const MotionSection = motion.section
+
   return (
-    <section className={`py-20 px-6 ${dark ? 'bg-deep-green text-white' : 'bg-light'} ${className}`}>
+    <MotionSection
+      className={`py-20 px-6 ${dark ? 'bg-forest text-dark' : 'bg-light'} ${className}`}
+      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.22 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="max-w-7xl mx-auto">
         {(label || title || subtitle) && (
           <div className={`mb-14 ${centered ? 'text-center' : ''}`}>
@@ -19,14 +30,14 @@ export default function SectionContainer({
             )}
             {title && (
               <h2 className={`font-display text-3xl md:text-4xl font-bold leading-tight
-                              ${dark ? 'text-white' : 'text-dark'}`}>
+                              ${dark ? 'text-dark' : 'text-dark'}`}>
                 {title}
               </h2>
             )}
             {subtitle && (
               <p className={`mt-4 text-base font-body leading-relaxed max-w-2xl
                              ${centered ? 'mx-auto' : ''}
-                             ${dark ? 'text-white/70' : 'text-dark/60'}`}>
+                             ${dark ? 'text-dark/70' : 'text-dark/70'}`}>
                 {subtitle}
               </p>
             )}
@@ -34,6 +45,6 @@ export default function SectionContainer({
         )}
         {children}
       </div>
-    </section>
+    </MotionSection>
   )
 }

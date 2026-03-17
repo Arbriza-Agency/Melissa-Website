@@ -60,7 +60,7 @@ export const projects = [
     client: 'Ministry of Environment · Colombia',
     description: 'Roadmap aligning NDC targets with sectoral investment plans and MRV protocols across ministries.',
     tags: ['NDC', 'Governance', 'MRV'],
-    color: '#E8410A',
+    color: '#C4A882',
   },
   {
     id: 2,
@@ -70,7 +70,7 @@ export const projects = [
     client: 'Mayor of Bogotá',
     description: 'Blueprint for resilient mobility, green corridors, and risk-informed budgeting for the metropolitan region.',
     tags: ['Resilience', 'Mobility', 'Budgeting'],
-    color: '#2D6A4F',
+    color: '#B89362',
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ export const projects = [
     client: 'Pacific Alliance',
     description: 'Coordinated adaptation and mitigation portfolio with shared indicators for four member countries.',
     tags: ['Regional', 'Indicators', 'Adaptation'],
-    color: '#0FA3B1',
+    color: '#D8C1A0',
   },
   {
     id: 4,
@@ -90,7 +90,7 @@ export const projects = [
     client: 'World Bank',
     description: 'Assessment of carbon tax scenarios and compensatory fiscal tools to protect vulnerable households.',
     tags: ['Carbon Tax', 'Equity', 'Fiscal'],
-    color: '#6A1B9A',
+    color: '#8E6F48',
   },
   {
     id: 5,
@@ -100,7 +100,7 @@ export const projects = [
     client: 'IDB',
     description: 'Toolkit for municipalities to prioritize and finance climate-smart infrastructure investments.',
     tags: ['Finance', 'Cities', 'Toolkit'],
-    color: '#E65100',
+    color: '#C4A882',
   },
   {
     id: 6,
@@ -110,7 +110,7 @@ export const projects = [
     client: 'UNDP LAC',
     description: 'Briefing on concessional finance needs and blended finance opportunities for adaptation in LAC.',
     tags: ['COP', 'Finance', 'Brief'],
-    color: '#00695C',
+    color: '#B89362',
   },
 ]
 
