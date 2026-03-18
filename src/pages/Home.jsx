@@ -145,10 +145,6 @@ export default function Home() {
 
             {/* Headline */}
             <div className="col-span-12 order-2 lg:order-2 flex flex-col items-center text-center" style={{ paddingBottom: '20px' }}>
-              <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-6 text-xs font-medium" style={{ background: 'rgba(196,168,130,0.10)', color: 'rgba(196,168,130,0.92)', border: '1px solid rgba(196,168,130,0.20)', opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(12px)', transition: 'opacity 0.5s 0.15s, transform 0.5s 0.15s' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#C4A882', display: 'inline-block' }} />
-                Available for consulting · Bogotá & Remote
-              </div>
               <h1 style={{ fontFamily: "'Georgia', 'Times New Roman', serif", fontSize: 'clamp(52px, 5.5vw, 80px)', fontWeight: '900', lineHeight: '1.0', letterSpacing: '-0.03em', color: '#F5F1EA', margin: 0, opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 0.7s 0.25s, transform 0.7s 0.25s' }}>
                 I'm <em style={{ color: '#C4A882', fontStyle: 'italic' }}>Melissa,</em><br />
                 <span>Climate</span><br />
@@ -158,7 +154,7 @@ export default function Home() {
                 Climate strategy and policy support for resilient cities and evidence-based decision-making.
               </p>
               <div className="flex items-center justify-center gap-4 mt-8 flex-wrap" style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.7s 0.55s, transform 0.7s 0.55s' }}>
-                <Link to="/projects" className="group inline-flex items-center gap-2.5 rounded-full font-bold text-sm text-deep-green transition-all duration-300 hover:scale-105" style={{ background: '#C4A882', padding: '14px 28px', boxShadow: '0 10px 40px rgba(196,168,130,0.18)' }}>
+                <Link to="/projects" className="group inline-flex items-center gap-2.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105" style={{ background: '#C4A882', color: '#0F0F0E', padding: '14px 28px', boxShadow: '0 10px 40px rgba(196,168,130,0.18)' }}>
                   View Projects
                   <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H7M17 7v10" /></svg>
                 </Link>
@@ -185,17 +181,41 @@ export default function Home() {
               />
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[480px] sm:h-[480px] md:w-[520px] md:h-[520px]"
-                style={{ borderRadius: '9999px', border: '1px dashed rgba(196,168,130,0.28)', zIndex: 1 }}
+                style={{ borderRadius: '9999px', border: '1px dotted rgba(196,168,130,0.26)', zIndex: 1 }}
+              />
+              {/* Vignette + warm gold bloom (removes old green tint) */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  zIndex: 2,
+                  background:
+                    'radial-gradient(60% 65% at 50% 38%, rgba(196,168,130,0.18) 0%, rgba(15,15,14,0.0) 55%), radial-gradient(70% 80% at 50% 50%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.72) 72%, rgba(0,0,0,0.92) 100%)',
+                }}
               />
               <div className="relative z-10 w-[280px] h-[420px] sm:w-[340px] sm:h-[480px] md:w-[380px] md:h-[520px]">
                 <img
                   src={HOME_MEDIA.portrait}
                   alt="Melissa Velásquez"
                   className="w-full h-full object-contain object-center"
-                  style={{ filter: 'drop-shadow(0 30px 40px rgba(27,67,50,0.4))' }}
+                  style={{ filter: 'drop-shadow(0 30px 42px rgba(0,0,0,0.60))' }}
                   loading="eager"
                   decoding="async"
                 />
+              </div>
+
+              {/* Availability pill (example style) */}
+              <div
+                className="absolute left-1/2 -translate-x-1/2 bottom-4 z-20 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold"
+                style={{
+                  background: 'rgba(0,0,0,0.40)',
+                  border: '1px solid rgba(196,168,130,0.26)',
+                  color: 'rgba(196,168,130,0.95)',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: '0 12px 38px rgba(0,0,0,0.45)',
+                }}
+              >
+                <span style={{ width: '6px', height: '6px', borderRadius: '9999px', background: '#C4A882', display: 'inline-block' }} />
+                Available for consulting · Bogotá & Remote
               </div>
             </div>
 
@@ -222,7 +242,7 @@ export default function Home() {
           backgroundSize: '48px 48px',
         }} />
         {/* Top glow */}
-        <div className="absolute pointer-events-none" style={{ width: '800px', height: '300px', background: 'radial-gradient(ellipse, rgba(45,106,79,0.25) 0%, transparent 70%)', top: '-80px', left: '50%', transform: 'translateX(-50%)' }} />
+        <div className="absolute pointer-events-none" style={{ width: '800px', height: '300px', background: 'radial-gradient(ellipse, rgba(196,168,130,0.16) 0%, transparent 72%)', top: '-80px', left: '50%', transform: 'translateX(-50%)' }} />
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 xl:px-10">
 
@@ -404,7 +424,7 @@ export default function Home() {
                   <source src={HOME_MEDIA.reel} type="video/quicktime" />
                   Your browser does not support the video tag.
                 </video>
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(27,67,50,0.0) 0%, rgba(27,67,50,0.55) 100%)' }} />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,15,14,0.86) 100%)' }} />
                 <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-6">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-white/80 font-body">Featured video</p>
@@ -435,7 +455,7 @@ export default function Home() {
               >
                 <div className="relative aspect-[4/3] sm:aspect-[3/2]">
                   <img src={item.src} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" aria-hidden="true" />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(27,67,50,0.0) 0%, rgba(27,67,50,0.55) 100%)' }} />
+                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,15,14,0.84) 100%)' }} />
                   <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
                     <p className="text-sm font-semibold text-white/95 font-display">{item.title}</p>
                     <span className="text-xs text-white/70 font-body">View</span>
