@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { projects, expertise } from '../data'
 import ProjectCard from '../components/ProjectCard'
@@ -10,7 +10,7 @@ const HOME_MEDIA = {
   heroAlt: '/media/home/hero-alt.jpg',
   portrait: '/media/home/portrait.png',
   feature: '/media/home/feature-1.jpg',
-  reel: '/media/home/reel.mov',
+  reel: '/media/home/reel.mp4',
   gallery: [
     '/media/gallery/pjg-7454.jpg',
     '/media/gallery/pjg-7451.jpg',
@@ -102,10 +102,20 @@ const PARTNER_LOGOS = [
   { name: 'Pacific Alliance',  short: 'PA',    bg: '#7B5EA7', text: 'white' },
 ]
 
+const SKILL_HOVER_STYLE = {
+  background: 'rgba(196,168,130,0.16)',
+  color: '#C4A882',
+  border: '1px solid rgba(196,168,130,0.26)',
+}
+
 export default function Home() {
   const [visible, setVisible] = useState(false)
   const [activeExpertise, setActiveExpertise] = useState(0)
+  const [hoveredSkill, setHoveredSkill] = useState(null)
+  const [videoMuted, setVideoMuted] = useState(true)
+  const [videoPlaying, setVideoPlaying] = useState(false)
   const reduceMotion = useReducedMotion()
+  const featuredVideoRef = useRef(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100)
@@ -115,6 +125,25 @@ export default function Home() {
   const years = useCounter(8, 1200, visible)
   const countries = useCounter(12, 1500, visible)
   const projects_count = useCounter(20, 1000, visible)
+
+  const toggleFeaturedVideoMute = () => {
+    if (!featuredVideoRef.current) return
+    const nextMuted = !featuredVideoRef.current.muted
+    featuredVideoRef.current.muted = nextMuted
+    featuredVideoRef.current.defaultMuted = nextMuted
+    setVideoMuted(nextMuted)
+  }
+
+  const toggleFeaturedVideoPlayback = () => {
+    if (!featuredVideoRef.current) return
+    if (featuredVideoRef.current.paused) {
+      featuredVideoRef.current.play()
+      setVideoPlaying(true)
+      return
+    }
+    featuredVideoRef.current.pause()
+    setVideoPlaying(false)
+  }
 
   return (
     <div className="bg-light">
@@ -339,17 +368,28 @@ export default function Home() {
                       {/* Skills */}
                       <div>
                         <p className="text-xs uppercase tracking-widest mb-3" style={{ color: 'rgba(196,168,130,0.55)', letterSpacing: '0.15em' }}>Key Skills</p>
-                        <div className="flex flex-wrap gap-2">
-                          {item.skills.map((skill, si) => (
-                            <span
-                              key={skill}
-                              className="text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_14px_30px_rgba(0,0,0,0.25)]"
-                              style={{ background: si === 0 ? 'rgba(196,168,130,0.16)' : 'rgba(255,255,255,0.05)', color: si === 0 ? '#C4A882' : 'rgba(255,255,255,0.65)', border: si === 0 ? '1px solid rgba(196,168,130,0.26)' : '1px solid rgba(255,255,255,0.10)', fontFamily: 'Georgia, serif' }}
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
+                          <div className="flex flex-wrap gap-2">
+                            {item.skills.map((skill, si) => (
+                              <span
+                                key={skill}
+                                onMouseEnter={() => setHoveredSkill(skill)}
+                                onMouseLeave={() => setHoveredSkill(null)}
+                                className="text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_14px_30px_rgba(0,0,0,0.25)]"
+                                style={
+                                  hoveredSkill === skill
+                                    ? { ...SKILL_HOVER_STYLE, fontFamily: 'Georgia, serif' }
+                                    : {
+                                        background: 'rgba(255,255,255,0.05)',
+                                        color: 'rgba(255,255,255,0.65)',
+                                        border: '1px solid rgba(255,255,255,0.10)',
+                                        fontFamily: 'Georgia, serif',
+                                      }
+                                }
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                       </div>
 
                       <div style={{ height: '1px', background: 'rgba(196,168,130,0.12)', margin: '28px 0' }} />
@@ -384,7 +424,11 @@ export default function Home() {
             <p className="text-xs uppercase tracking-widest text-center mb-8" style={{ color: 'rgba(196,168,130,0.55)', letterSpacing: '0.2em' }}>Trusted by leading organizations</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
               {PARTNER_LOGOS.map(org => (
-                <div key={org.name} className="flex items-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-200" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(196,168,130,0.16)' }}>
+                <div
+                  key={org.name}
+                  className="flex items-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:shadow-[0_14px_30px_rgba(0,0,0,0.25)]"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(196,168,130,0.16)' }}
+                >
                   <div className="rounded flex items-center justify-center font-black" style={{ width: '24px', height: '24px', background: org.bg, color: org.text, fontSize: '8px', letterSpacing: '-0.01em', flexShrink: 0 }}>
                     {org.short}
                   </div>
@@ -411,28 +455,98 @@ export default function Home() {
             <Link to="/about" className="text-sm font-medium hover:underline text-forest font-body">More about Melissa →</Link>
           </div>
 
-          <div className="grid grid-cols-12 gap-4">
+          <div className="space-y-6">
             {/* Video tile */}
             <MotionDiv
-              className="col-span-12 lg:col-span-7 overflow-hidden rounded-3xl border border-white/10 bg-forest/70 shadow-sm relative"
+              className="group max-w-5xl mx-auto overflow-hidden rounded-[32px] border border-white/10 bg-forest/70 shadow-sm relative"
               initial={reduceMotion ? false : { opacity: 0, y: 14 }}
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="relative aspect-video">
+              <div className="relative aspect-[16/9] overflow-hidden bg-forest">
                 <video
+                  ref={featuredVideoRef}
                   className="absolute inset-0 w-full h-full object-cover"
-                  muted
+                  style={{ objectPosition: 'center 38%' }}
+                  muted={videoMuted}
                   playsInline
                   loop
                   controls
                   preload="metadata"
+                  poster={HOME_MEDIA.gallery[1]}
+                  onPlay={() => setVideoPlaying(true)}
+                  onPause={() => setVideoPlaying(false)}
                 >
-                  <source src={HOME_MEDIA.reel} type="video/quicktime" />
+                  <source src={HOME_MEDIA.reel} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,15,14,0.86) 100%)' }} />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(180deg, rgba(15,15,14,0.12) 0%, rgba(15,15,14,0.04) 38%, rgba(15,15,14,0.78) 100%)' }} />
+                <div className="absolute left-4 top-4 z-20">
+                  <button
+                    type="button"
+                    onClick={toggleFeaturedVideoMute}
+                    className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(0,0,0,0.22)]"
+                    style={{
+                      background: 'rgba(15,15,14,0.48)',
+                      borderColor: 'rgba(196,168,130,0.34)',
+                      color: '#F5F1EA',
+                      backdropFilter: 'blur(10px)',
+                    }}
+                    aria-label={videoMuted ? 'Enable sound' : 'Mute sound'}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {videoMuted ? (
+                        <>
+                          <path d="M11 5L6.5 9H3V15H6.5L11 19V5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M16 9L21 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                          <path d="M21 9L16 14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                        </>
+                      ) : (
+                        <>
+                          <path d="M11 5L6.5 9H3V15H6.5L11 19V5Z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M15.5 9.5C16.4 10.3 17 11.55 17 13C17 14.45 16.4 15.7 15.5 16.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                          <path d="M18.5 7C20 8.4 21 10.55 21 13C21 15.45 20 17.6 18.5 19" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                        </>
+                      )}
+                    </svg>
+                    <span>{videoMuted ? 'Sound off' : 'Sound on'}</span>
+                  </button>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                  <button
+                    type="button"
+                    onClick={toggleFeaturedVideoPlayback}
+                    className="pointer-events-auto flex items-center justify-center rounded-full border backdrop-blur-md transition-transform duration-300 hover:scale-105"
+                    style={{
+                      width: '88px',
+                      height: '88px',
+                      background: 'rgba(15,15,14,0.42)',
+                      borderColor: 'rgba(196,168,130,0.42)',
+                      boxShadow: '0 20px 44px rgba(0,0,0,0.32)',
+                    }}
+                    aria-label={videoPlaying ? 'Pause video' : 'Play video'}
+                  >
+                    <div
+                      className="flex h-14 w-14 items-center justify-center rounded-full"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(196,168,130,0.96) 0%, rgba(231,205,174,0.94) 100%)',
+                        boxShadow: '0 10px 24px rgba(196,168,130,0.28)',
+                      }}
+                    >
+                      {videoPlaying ? (
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="4.5" y="3.5" width="3.25" height="11" rx="0.9" fill="#0F0F0E" />
+                          <rect x="10.25" y="3.5" width="3.25" height="11" rx="0.9" fill="#0F0F0E" />
+                        </svg>
+                      ) : (
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginLeft: '2px' }}>
+                          <path d="M5.25 3.75L14.25 9L5.25 14.25V3.75Z" fill="#0F0F0E" />
+                        </svg>
+                      )}
+                    </div>
+                  </button>
+                </div>
                 <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-6">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-white/80 font-body">Featured video</p>
@@ -445,32 +559,33 @@ export default function Home() {
               </div>
             </MotionDiv>
 
-            {/* Bento images */}
-            {[
-              { src: HOME_MEDIA.gallery[0], title: 'Conference', span: 'col-span-12 sm:col-span-6 lg:col-span-5' },
-              { src: HOME_MEDIA.gallery[2], title: 'Urban work', span: 'col-span-12 sm:col-span-6 lg:col-span-5' },
-              { src: HOME_MEDIA.gallery[3], title: 'Workshop', span: 'col-span-12 sm:col-span-6 lg:col-span-4' },
-              { src: HOME_MEDIA.gallery[5], title: 'Details', span: 'col-span-12 sm:col-span-6 lg:col-span-4' },
-            ].map((item, idx) => (
-              <MotionDiv
-                key={item.src}
-                className={`${item.span} overflow-hidden rounded-3xl border border-white/10 bg-forest/70 shadow-sm group relative`}
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{ duration: 0.6, delay: 0.08 * idx }}
-                whileHover={reduceMotion ? undefined : { y: -2 }}
-              >
-                <div className="relative aspect-[4/3] sm:aspect-[3/2]">
-                  <img src={item.src} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" aria-hidden="true" />
-                  <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,15,14,0.84) 100%)' }} />
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
-                    <p className="text-sm font-semibold text-white/95 font-display">{item.title}</p>
-                    <span className="text-xs text-white/70 font-body">View</span>
+            {/* Image grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { src: HOME_MEDIA.gallery[0], title: 'Conference' },
+                { src: HOME_MEDIA.gallery[2], title: 'Urban work' },
+                { src: HOME_MEDIA.gallery[3], title: 'Workshop' },
+                { src: HOME_MEDIA.gallery[5], title: 'Details' },
+              ].map((item, idx) => (
+                <MotionDiv
+                  key={item.src}
+                  className="overflow-hidden rounded-3xl border border-white/10 bg-forest/70 shadow-sm group relative"
+                  initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ duration: 0.6, delay: 0.08 * idx }}
+                  whileHover={reduceMotion ? undefined : { y: -2 }}
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-forest">
+                    <img src={item.src} alt="" className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.05]" loading="lazy" decoding="async" aria-hidden="true" />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.0) 0%, rgba(15,15,14,0.84) 100%)' }} />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <p className="text-sm font-semibold text-white/95 font-display">{item.title}</p>
+                    </div>
                   </div>
-                </div>
-              </MotionDiv>
-            ))}
+                </MotionDiv>
+              ))}
+            </div>
           </div>
         </div>
       </section>
