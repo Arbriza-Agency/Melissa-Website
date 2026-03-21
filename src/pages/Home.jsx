@@ -609,8 +609,8 @@ export default function Home() {
       </section>
 
       {/* ── MAP ───────────────────────────────────────────────────────────────── */}
-      <section data-reveal className="py-20 px-10" style={{ background: '#0F0F0E' }}>
-        <div className="max-w-7xl mx-auto">
+      <section data-reveal className="py-24 px-8 xl:px-10" style={{ background: '#0F0F0E' }}>
+        <div className="max-w-[88rem] mx-auto">
           <p className="text-xs uppercase tracking-widest text-dark/50 mb-2 text-center font-body">Global Reach</p>
           <h3 className="text-4xl font-black text-center text-dark mb-4">Project Locations</h3>
           <p className="text-sm text-center text-dark/50 mb-10 max-w-xl mx-auto font-body">

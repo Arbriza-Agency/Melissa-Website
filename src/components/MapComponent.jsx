@@ -1,507 +1,453 @@
 import { useState } from 'react'
+import {
+  Annotation,
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+  Sphere,
+  ZoomableGroup,
+} from 'react-simple-maps'
 
-// Country SVG paths for a Mercator-style world map (simplified but recognizable)
-// Using a viewBox of 0 0 1000 500
+const GEO_URL = '/media/countries-110m.json'
 
-const LIVED_WORKED = ['United States', 'El Salvador', 'France', 'Armenia']
-const PROFESSIONAL = ['Mexico', 'Colombia', 'Ecuador', 'Chile', 'Argentina', 'Jamaica']
+const LIVED_WORKED_IDS = new Set(['840', '222', '250', '051'])
+const PROFESSIONAL_PRIMARY_IDS = new Set(['484', '170', '218', '152'])
+const PROFESSIONAL_SECONDARY_IDS = new Set(['032', '388'])
 
-const COUNTRY_COLORS = {
-  'United States': '#C4A882',
-  'El Salvador': '#C4A882',
-  'France': '#C4A882',
-  'Armenia': '#C4A882',
-  'Mexico': '#8E6F48',
-  'Colombia': '#8E6F48',
-  'Ecuador': '#8E6F48',
-  'Chile': '#8E6F48',
-  'Argentina': '#B89362',
-  'Jamaica': '#B89362',
+const COUNTRY_NAMES = {
+  '051': 'Armenia',
+  '152': 'Chile',
+  '170': 'Colombia',
+  '218': 'Ecuador',
+  '222': 'El Salvador',
+  '250': 'France',
+  '032': 'Argentina',
+  '388': 'Jamaica',
+  '484': 'Mexico',
+  '840': 'United States',
 }
 
-// Approximate country paths in SVG viewBox 0 0 1000 500
-const COUNTRIES = [
+const MARKERS = [
+  { id: '840', label: ['United States'], coordinates: [-98, 38], dx: -86, dy: -6, variant: 'lived' },
+  { id: '222', label: ['El Salvador'], coordinates: [-88.9, 13.8], dx: -88, dy: 16, variant: 'lived' },
+  { id: '250', label: ['France'], coordinates: [2.2, 46.2], dx: 56, dy: -14, variant: 'lived' },
+  { id: '051', label: ['Armenia'], coordinates: [44.8, 40.3], dx: 52, dy: 8, variant: 'lived' },
+  { id: '484', label: [], coordinates: [-102.3, 23.5], variant: 'professional-primary' },
+  { id: '170', label: [], coordinates: [-74.2, 4.6], variant: 'professional-primary' },
+  { id: '218', label: [], coordinates: [-78.4, -1.3], variant: 'professional-primary' },
+  { id: '152', label: [], coordinates: [-71.0, -31.8], variant: 'professional-primary' },
+  { id: '032', label: [], coordinates: [-64.2, -34.5], variant: 'professional-secondary' },
+  { id: '388', label: [], coordinates: [-77.3, 18.1], variant: 'professional-secondary' },
+]
+
+const GROUP_ANNOTATIONS = [
   {
-    id: 'united-states',
-    name: 'United States',
-    path: 'M 120 120 L 280 118 L 285 125 L 290 145 L 278 155 L 260 158 L 245 170 L 230 172 L 215 165 L 200 168 L 185 162 L 170 168 L 155 162 L 140 165 L 128 158 L 118 148 L 115 135 Z',
-    labelX: 200,
-    labelY: 145,
-  },
-  {
-    id: 'alaska',
-    name: '',
-    path: 'M 90 95 L 115 90 L 120 100 L 118 110 L 108 115 L 95 112 L 88 105 Z',
-    labelX: 0,
-    labelY: 0,
-    color: '#C4A882',
-  },
-  {
-    id: 'canada',
-    name: '',
-    path: 'M 118 88 L 285 85 L 288 118 L 120 120 L 115 105 Z',
-    labelX: 0,
-    labelY: 0,
-    color: '#CCCCCC',
-  },
-  {
-    id: 'mexico',
-    name: 'Mexico',
-    path: 'M 128 158 L 200 155 L 215 165 L 205 180 L 195 192 L 180 200 L 165 198 L 152 190 L 142 180 L 132 170 Z',
-    labelX: 170,
-    labelY: 178,
-  },
-  {
-    id: 'guatemala',
-    name: '',
-    path: 'M 180 200 L 195 198 L 197 208 L 188 212 L 180 208 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'el-salvador',
-    name: 'El Salvador',
-    path: 'M 178 208 L 186 207 L 188 212 L 183 215 L 177 213 Z',
-    labelX: 182,
-    labelY: 213,
-  },
-  {
-    id: 'colombia',
-    name: 'Colombia',
-    path: 'M 192 220 L 210 218 L 218 225 L 218 240 L 210 248 L 198 248 L 190 240 L 188 230 Z',
-    labelX: 203,
-    labelY: 235,
-  },
-  {
-    id: 'ecuador',
-    name: 'Ecuador',
-    path: 'M 190 248 L 202 248 L 205 262 L 195 265 L 187 258 Z',
-    labelX: 196,
-    labelY: 258,
-  },
-  {
-    id: 'peru',
-    name: '',
-    path: 'M 195 265 L 212 260 L 220 275 L 215 295 L 200 300 L 190 290 L 188 275 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'brazil',
-    name: '',
-    path: 'M 215 228 L 260 222 L 280 230 L 285 260 L 275 290 L 255 305 L 230 308 L 210 298 L 205 275 L 215 255 L 215 240 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'chile',
-    name: 'Chile',
-    path: 'M 200 298 L 208 298 L 215 320 L 218 355 L 212 375 L 205 360 L 200 340 L 198 315 Z',
-    labelX: 210,
-    labelY: 332,
-  },
-  {
-    id: 'argentina',
-    name: 'Argentina',
-    path: 'M 210 298 L 240 295 L 248 315 L 245 345 L 235 370 L 220 378 L 212 370 L 208 350 L 210 320 Z',
-    labelX: 232,
-    labelY: 338,
-  },
-  {
-    id: 'venezuela',
-    name: '',
-    path: 'M 210 218 L 235 215 L 242 222 L 238 232 L 220 235 L 212 228 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Europe
-  {
-    id: 'france',
-    name: 'France',
-    path: 'M 450 130 L 468 128 L 475 135 L 473 148 L 462 155 L 450 152 L 445 142 Z',
-    labelX: 460,
-    labelY: 143,
-  },
-  {
-    id: 'uk',
-    name: '',
-    path: 'M 435 118 L 445 115 L 448 122 L 445 130 L 437 132 L 433 126 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'spain',
-    name: '',
-    path: 'M 435 148 L 458 145 L 462 155 L 455 162 L 440 162 L 432 156 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'germany',
-    name: '',
-    path: 'M 465 122 L 482 120 L 488 128 L 485 138 L 472 140 L 465 133 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'italy',
-    name: '',
-    path: 'M 468 140 L 480 138 L 485 148 L 482 160 L 474 165 L 468 158 L 466 148 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'poland',
-    name: '',
-    path: 'M 482 118 L 502 116 L 508 124 L 505 133 L 490 135 L 482 128 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'ukraine',
-    name: '',
-    path: 'M 500 120 L 528 118 L 535 128 L 530 138 L 510 140 L 500 130 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'scandinavia',
-    name: '',
-    path: 'M 455 95 L 490 90 L 500 100 L 495 115 L 482 118 L 465 115 L 458 105 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Middle East & Central Asia
-  {
-    id: 'turkey',
-    name: '',
-    path: 'M 515 148 L 548 145 L 555 152 L 550 162 L 530 165 L 515 160 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'armenia',
-    name: 'Armenia',
-    path: 'M 548 152 L 558 150 L 562 156 L 558 162 L 550 162 Z',
-    labelX: 558,
-    labelY: 158,
-  },
-  {
-    id: 'iran',
-    name: '',
-    path: 'M 555 158 L 585 155 L 592 165 L 588 180 L 570 185 L 555 178 L 552 168 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'saudi',
-    name: '',
-    path: 'M 530 168 L 558 165 L 568 172 L 568 192 L 555 200 L 535 198 L 525 188 L 528 175 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Africa
-  {
-    id: 'morocco',
-    name: '',
-    path: 'M 435 162 L 455 160 L 458 172 L 450 180 L 436 178 L 432 170 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'west-africa',
-    name: '',
-    path: 'M 420 182 L 460 178 L 468 192 L 465 210 L 448 215 L 428 212 L 418 198 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'central-africa',
-    name: '',
-    path: 'M 460 200 L 510 198 L 520 215 L 515 235 L 495 242 L 470 240 L 458 225 L 458 210 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'east-africa',
-    name: '',
-    path: 'M 510 195 L 535 193 L 542 205 L 540 225 L 528 235 L 515 232 L 510 218 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'south-africa',
-    name: '',
-    path: 'M 465 240 L 510 238 L 518 260 L 510 280 L 490 288 L 472 282 L 462 265 L 462 250 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Asia
-  {
-    id: 'russia',
-    name: '',
-    path: 'M 500 80 L 700 65 L 760 75 L 765 100 L 740 115 L 680 118 L 600 115 L 540 112 L 510 105 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'china',
-    name: '',
-    path: 'M 640 130 L 720 125 L 740 135 L 742 158 L 728 172 L 700 178 L 668 175 L 645 165 L 635 148 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'india',
-    name: '',
-    path: 'M 600 158 L 640 155 L 648 165 L 645 185 L 635 200 L 618 205 L 602 198 L 596 182 L 596 168 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'southeast-asia',
-    name: '',
-    path: 'M 700 175 L 740 170 L 752 182 L 748 200 L 728 208 L 705 205 L 695 192 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'japan',
-    name: '',
-    path: 'M 748 128 L 760 125 L 768 132 L 765 145 L 755 148 L 748 142 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Australia
-  {
-    id: 'australia',
-    name: '',
-    path: 'M 720 280 L 790 272 L 815 285 L 818 315 L 800 335 L 770 340 L 745 330 L 728 312 L 718 295 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'new-zealand',
-    name: '',
-    path: 'M 830 318 L 840 315 L 845 325 L 840 335 L 832 332 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  // Caribbean
-  {
-    id: 'cuba',
-    name: '',
-    path: 'M 210 188 L 235 185 L 240 190 L 235 195 L 212 195 Z',
-    labelX: 0, labelY: 0, color: '#CCCCCC',
-  },
-  {
-    id: 'jamaica',
-    name: 'Jamaica',
-    path: 'M 228 196 L 238 194 L 241 199 L 236 203 L 227 201 Z',
-    labelX: 234,
-    labelY: 200,
+    id: 'latam',
+    coordinates: [-79.5, 6],
+    dx: -142,
+    dy: 86,
+    label: ['Mexico, Colombia,', 'Ecuador, Chile,', 'Argentina,', 'Montego Bay, Jamaica'],
+    variant: 'professional-primary',
   },
 ]
 
-const LABEL_POSITIONS = {
-  'United States':  { x: 165, y: 148, lineX: 200, lineY: 142 },
-  'El Salvador':    { x: 140, y: 222, lineX: 182, lineY: 211 },
-  'France':         { x: 500, y: 130, lineX: 462, lineY: 140 },
-  'Armenia':        { x: 590, y: 148, lineX: 560, lineY: 156 },
-  'Mexico':         { x: 148, y: 185, lineX: 168, lineY: 178 },
-  'Colombia':       { x: 175, y: 248, lineX: 200, lineY: 235 },
-  'Ecuador':        { x: 165, y: 265, lineX: 192, lineY: 256 },
-  'Chile':          { x: 178, y: 338, lineX: 206, lineY: 330 },
-  'Argentina':      { x: 250, y: 350, lineX: 232, lineY: 340 },
-  'Jamaica':        { x: 220, y: 215, lineX: 234, lineY: 200 },
+const LEGEND_GROUPS = [
+  {
+    title: 'Lived & Worked in',
+    tone: 'lived',
+    items: ['United States', 'El Salvador', 'France', 'Armenia'],
+  },
+  {
+    title: 'Professional Experience in',
+    tone: 'professional-primary',
+    items: ['Mexico, Colombia, Ecuador, Chile', 'Argentina, Montego Bay, Jamaica'],
+  },
+]
+
+function getGeoId(geo) {
+  return String(geo.id).padStart(3, '0')
 }
 
-const REGION_LABELS = {
-  'United States': 'United States',
-  'El Salvador': 'El Salvador',
-  'France': 'France',
-  'Armenia': 'Armenia',
-  'Mexico': 'México, Colombia,\nEcuador, Chile,\nArgentina,\nMontego Bay, Jamaica',
+function getRegionVariant(geoId) {
+  if (LIVED_WORKED_IDS.has(geoId)) return 'lived'
+  if (PROFESSIONAL_PRIMARY_IDS.has(geoId)) return 'professional-primary'
+  if (PROFESSIONAL_SECONDARY_IDS.has(geoId)) return 'professional-secondary'
+  return 'default'
 }
 
-const getCountryColor = (name) => {
-  if (!name) return null
-  if (COUNTRY_COLORS[name]) return COUNTRY_COLORS[name]
-  return null
+function getVariantStyles(variant, active = false) {
+  if (variant === 'lived') {
+    return {
+      fill: active ? '#D6BC99' : '#C4A882',
+      stroke: active ? 'rgba(245,241,234,0.52)' : 'rgba(231,205,174,0.34)',
+      marker: '#C4A882',
+      ring: 'rgba(231,205,174,0.58)',
+      label: 'rgba(245,241,234,0.94)',
+      connector: 'rgba(231,205,174,0.54)',
+    }
+  }
+
+  if (variant === 'professional-secondary') {
+    return {
+      fill: active ? '#C29C68' : '#AC865A',
+      stroke: active ? 'rgba(245,241,234,0.34)' : 'rgba(196,168,130,0.24)',
+      marker: '#B89362',
+      ring: 'rgba(196,168,130,0.42)',
+      label: 'rgba(245,241,234,0.82)',
+      connector: 'rgba(196,168,130,0.38)',
+    }
+  }
+
+  if (variant === 'professional-primary') {
+    return {
+      fill: active ? '#A8865B' : '#8E6F48',
+      stroke: active ? 'rgba(245,241,234,0.32)' : 'rgba(196,168,130,0.22)',
+      marker: '#8E6F48',
+      ring: 'rgba(196,168,130,0.38)',
+      label: 'rgba(245,241,234,0.8)',
+      connector: 'rgba(196,168,130,0.34)',
+    }
+  }
+
+  return {
+    fill: active ? 'url(#landGradientActive)' : 'url(#landGradient)',
+    stroke: active ? 'rgba(245,241,234,0.18)' : 'rgba(245,241,234,0.09)',
+    marker: '#8A837B',
+    ring: 'rgba(245,241,234,0.16)',
+    label: 'rgba(245,241,234,0.74)',
+    connector: 'rgba(245,241,234,0.24)',
+  }
+}
+
+function LabelBlock({ lines, textAnchor = 'start', fill }) {
+  return (
+    <text
+      textAnchor={textAnchor}
+      fontSize="12"
+      fontFamily="Montserrat, system-ui, sans-serif"
+      fontWeight="500"
+      fill={fill}
+      paintOrder="stroke"
+      stroke="rgba(15,15,14,0.92)"
+      strokeWidth="3.6"
+      strokeLinejoin="round"
+    >
+      {lines.map((line, index) => (
+        <tspan key={line} x="0" dy={index === 0 ? 0 : 16}>
+          {line}
+        </tspan>
+      ))}
+    </text>
+  )
 }
 
 export default function MapComponent() {
-  const [hovered, setHovered] = useState(null)
+  const [hoveredId, setHoveredId] = useState(null)
 
   return (
-    <div style={{
-      background: '#0F0F0E',
-      borderRadius: '12px',
-      padding: '32px',
-      fontFamily: "'Georgia', 'Times New Roman', serif",
-      maxWidth: '960px',
-      margin: '0 auto',
-    }}>
-      {/* Title */}
-      <div style={{ textAlign: 'center', marginBottom: '8px' }}>
-        <h2 style={{
-          fontSize: '28px',
-          fontWeight: '400',
-          color: 'rgba(245,241,234,0.78)',
-          margin: '0 0 12px 0',
-          letterSpacing: '0.02em',
-        }}>Global Experience</h2>
-        <div style={{
-          width: '60px',
-          height: '1px',
-          background: '#888',
-          margin: '0 auto 16px',
-        }} />
-        <p style={{
-          fontSize: '13px',
-          color: '#555',
-          maxWidth: '520px',
-          margin: '0 auto 24px',
-          lineHeight: '1.6',
-          fontStyle: 'italic',
-        }}>
+    <div
+      style={{
+        width: '100%',
+        maxWidth: '1240px',
+        margin: '0 auto',
+        borderRadius: '32px',
+        padding: '36px 28px 28px',
+        background:
+          'radial-gradient(circle at 50% 0%, rgba(196,168,130,0.10) 0%, rgba(15,15,14,0.0) 30%), linear-gradient(180deg, rgba(26,25,24,0.98) 0%, rgba(15,15,14,1) 100%)',
+        border: '1px solid rgba(196,168,130,0.16)',
+        boxShadow: '0 28px 80px rgba(0,0,0,0.32)',
+      }}
+    >
+      <div style={{ textAlign: 'center', marginBottom: '18px' }}>
+        <p
+          style={{
+            margin: '0 0 10px',
+            fontSize: '11px',
+            letterSpacing: '0.24em',
+            textTransform: 'uppercase',
+            color: 'rgba(196,168,130,0.72)',
+            fontFamily: 'Montserrat, system-ui, sans-serif',
+            fontWeight: '600',
+          }}
+        >
+          Global Experience
+        </p>
+        <h2
+          style={{
+            margin: '0',
+            fontSize: 'clamp(34px, 4.6vw, 52px)',
+            lineHeight: 1.06,
+            color: '#F5F1EA',
+            fontFamily: 'Georgia, Times New Roman, serif',
+            fontWeight: '700',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Global Experience
+        </h2>
+        <p
+          style={{
+            maxWidth: '760px',
+            margin: '16px auto 0',
+            fontSize: '15px',
+            lineHeight: '1.8',
+            color: 'rgba(245,241,234,0.66)',
+            fontFamily: 'Montserrat, system-ui, sans-serif',
+          }}
+        >
           Over the past ten years, I have lived, studied, and worked across multiple regions,
           shaping a diverse and internationally informed perspective on climate strategy,
           economic development, and urban resilience.
         </p>
       </div>
 
-      {/* Map */}
-      <div style={{ position: 'relative', background: '#0F0F0E', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(196,168,130,0.18)' }}>
-        <svg
-          viewBox="0 0 1000 500"
-          style={{ width: '100%', display: 'block' }}
-          xmlns="http://www.w3.org/2000/svg"
+      <div
+        style={{
+          position: 'relative',
+          borderRadius: '26px',
+          overflow: 'hidden',
+          background:
+            'radial-gradient(circle at 50% 18%, rgba(245,241,234,0.05) 0%, rgba(15,15,14,0) 34%), linear-gradient(180deg, rgba(24,24,23,0.98) 0%, rgba(15,15,14,0.98) 100%)',
+          border: '1px solid rgba(196,168,130,0.12)',
+          padding: '16px 8px 8px',
+        }}
+      >
+        <ComposableMap
+          width={1200}
+          height={620}
+          projection="geoMercator"
+          projectionConfig={{ scale: 182 }}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         >
-          {/* Ocean */}
-          <rect width="1000" height="500" fill="#0F0F0E" />
+          <defs>
+            <linearGradient id="oceanGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#121110" />
+              <stop offset="52%" stopColor="#171614" />
+              <stop offset="100%" stopColor="#0F0F0E" />
+            </linearGradient>
+            <linearGradient id="landGradient" x1="120" y1="120" x2="1040" y2="540" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#403C37" />
+              <stop offset="55%" stopColor="#35322E" />
+              <stop offset="100%" stopColor="#2A2825" />
+            </linearGradient>
+            <linearGradient id="landGradientActive" x1="160" y1="120" x2="1020" y2="560" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#4B463F" />
+              <stop offset="50%" stopColor="#3D3934" />
+              <stop offset="100%" stopColor="#302D29" />
+            </linearGradient>
+            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="8" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-          {/* Countries */}
-          {COUNTRIES.map((country) => {
-            const color = country.color || getCountryColor(country.name) || '#C8C8C8'
-            const isHighlighted = LIVED_WORKED.includes(country.name) || PROFESSIONAL.includes(country.name)
-            const isHovered = hovered === country.name
-            return (
-              <path
-                key={country.id}
-                d={country.path}
-                fill={color}
-                stroke="rgba(245,241,234,0.10)"
-                strokeWidth="1"
-                opacity={isHovered ? 0.85 : 1}
-                style={{ cursor: isHighlighted ? 'pointer' : 'default', transition: 'opacity 0.2s' }}
-                onMouseEnter={() => isHighlighted && country.name && setHovered(country.name)}
-                onMouseLeave={() => setHovered(null)}
-              />
-            )
-          })}
+          <Sphere fill="url(#oceanGradient)" />
 
-          {/* Pin dots */}
-          {[
-            { name: 'United States', cx: 200, cy: 142, ring: true },
-            { name: 'El Salvador', cx: 182, cy: 211, ring: true },
-            { name: 'France', cx: 462, cy: 140, ring: true },
-            { name: 'Armenia', cx: 555, cy: 156, ring: true },
-            { name: 'Mexico', cx: 168, cy: 178, ring: false },
-            { name: 'Colombia', cx: 200, cy: 235, ring: false },
-            { name: 'Ecuador', cx: 192, cy: 256, ring: false },
-            { name: 'Chile', cx: 206, cy: 330, ring: false },
-            { name: 'Argentina', cx: 232, cy: 340, ring: false },
-            { name: 'Jamaica', cx: 234, cy: 200, ring: false },
-          ].map(pin => (
-            <g key={pin.name}>
-              {pin.ring && (
-                <circle cx={pin.cx} cy={pin.cy} r="5" fill="#0F0F0E" stroke="#C4A882" strokeWidth="1.5" />
-              )}
-              {!pin.ring && (
-                <circle cx={pin.cx} cy={pin.cy} r="5" fill="#0F0F0E" stroke="#8E6F48" strokeWidth="1.5" />
-              )}
-              <circle
-                cx={pin.cx}
-                cy={pin.cy}
-                r="2.5"
-                fill={pin.ring ? '#C4A882' : '#8E6F48'}
-              />
-            </g>
-          ))}
+          <ZoomableGroup center={[0, 14]}>
+            <Geographies geography={GEO_URL}>
+              {({ geographies }) => {
+                const visibleGeographies = geographies.filter((geo) => getGeoId(geo) !== '010')
 
-          {/* Labels */}
-          {/* United States */}
-          <line x1="190" y1="148" x2="165" y2="148" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
-          <circle cx="165" cy="148" r="1.5" fill="rgba(245,241,234,0.6)" />
-          <text x="162" y="146" textAnchor="end" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">United States</text>
+                return (
+                  <>
+                    <g transform="translate(0 6)" opacity="0.28">
+                      {visibleGeographies.map((geo) => (
+                        <Geography
+                          key={`${geo.rsmKey}-shadow`}
+                          geography={geo}
+                          fill="rgba(0,0,0,0.34)"
+                          stroke="none"
+                        />
+                      ))}
+                    </g>
 
-          {/* El Salvador */}
-          <line x1="178" y1="211" x2="140" y2="222" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
-          <circle cx="140" cy="222" r="1.5" fill="rgba(245,241,234,0.6)" />
-          <text x="137" y="220" textAnchor="end" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">El Salvador</text>
+                    {visibleGeographies.map((geo) => {
+                      const geoId = getGeoId(geo)
+                      const variant = getRegionVariant(geoId)
+                      const isActive = hoveredId === geoId
+                      const styles = getVariantStyles(variant, isActive)
 
-          {/* France */}
-          <line x1="462" y1="135" x2="505" y2="125" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
-          <circle cx="505" cy="125" r="1.5" fill="rgba(245,241,234,0.6)" />
-          <text x="508" y="124" textAnchor="start" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">France</text>
+                      return (
+                        <Geography
+                          key={geo.rsmKey}
+                          geography={geo}
+                          fill={styles.fill}
+                          stroke={styles.stroke}
+                          strokeWidth={variant === 'default' ? 0.65 : 1.05}
+                          style={{
+                            default: { outline: 'none' },
+                            hover: { outline: 'none' },
+                            pressed: { outline: 'none' },
+                          }}
+                          onMouseEnter={() => {
+                            if (variant !== 'default') setHoveredId(geoId)
+                          }}
+                          onMouseLeave={() => setHoveredId(null)}
+                        />
+                      )
+                    })}
+                  </>
+                )
+              }}
+            </Geographies>
 
-          {/* Armenia */}
-          <line x1="562" y1="156" x2="600" y2="158" stroke="rgba(245,241,234,0.35)" strokeWidth="0.8" />
-          <circle cx="600" cy="158" r="1.5" fill="rgba(245,241,234,0.6)" />
-          <text x="603" y="157" textAnchor="start" fontSize="9" fontFamily="Cormorant Garamond, Georgia, serif" fill="rgba(245,241,234,0.78)" fontWeight="600">Armenia</text>
+            {MARKERS.map((marker) => {
+              const isActive = hoveredId === marker.id
+              const styles = getVariantStyles(marker.variant, isActive)
 
-          {/* Latin America group label */}
-          <line x1="168" y1="178" x2="135" y2="268" stroke="rgba(245,241,234,0.28)" strokeWidth="0.8" />
-          <circle cx="135" cy="268" r="1.5" fill="rgba(245,241,234,0.55)" />
-          <text x="132" y="268" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">México, Colombia,</text>
-          <text x="132" y="279" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Ecuador, Chile,</text>
-          <text x="132" y="290" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Argentina,</text>
-          <text x="132" y="301" textAnchor="end" fontSize="8.5" fontFamily="Montserrat, system-ui, sans-serif" fill="rgba(245,241,234,0.68)">Montego Bay, Jamaica</text>
+              return (
+                <Marker
+                  key={marker.id}
+                  coordinates={marker.coordinates}
+                  onMouseEnter={() => setHoveredId(marker.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                >
+                  <g filter="url(#softGlow)" style={{ cursor: 'pointer' }}>
+                    <circle
+                      r={marker.variant === 'lived' ? 7 : 5.5}
+                      fill="rgba(15,15,14,0.88)"
+                      stroke={styles.ring}
+                      strokeWidth={marker.variant === 'lived' ? 1.8 : 1.4}
+                    />
+                    <circle r={marker.variant === 'lived' ? 2.8 : 2.4} fill={styles.marker} />
+                  </g>
+                </Marker>
+              )
+            })}
 
-          {/* Hover tooltip */}
-          {hovered && (
-            <g>
-              <rect
-                x={LABEL_POSITIONS[hovered] ? LABEL_POSITIONS[hovered].lineX - 5 : 400}
-                y={LABEL_POSITIONS[hovered] ? LABEL_POSITIONS[hovered].lineY - 18 : 200}
-                width="120" height="22" rx="4"
-                fill="rgba(0,0,0,0.75)"
-              />
-              <text
-                x={LABEL_POSITIONS[hovered] ? LABEL_POSITIONS[hovered].lineX + 55 : 460}
-                y={LABEL_POSITIONS[hovered] ? LABEL_POSITIONS[hovered].lineY - 3 : 215}
-                textAnchor="middle"
-                fontSize="8"
-                fontFamily="Montserrat, system-ui, sans-serif"
-                fill="white"
-              >{hovered}</text>
-            </g>
-          )}
-        </svg>
+            {MARKERS.filter((marker) => marker.label.length > 0).map((marker) => {
+              const isActive = hoveredId === marker.id
+              const styles = getVariantStyles(marker.variant, isActive)
+              const textAnchor = marker.dx < 0 ? 'end' : 'start'
+
+              return (
+                <Annotation
+                  key={`${marker.id}-annotation`}
+                  subject={marker.coordinates}
+                  dx={marker.dx}
+                  dy={marker.dy}
+                  connectorProps={{
+                    stroke: styles.connector,
+                    strokeWidth: 1.15,
+                    strokeLinecap: 'round',
+                  }}
+                >
+                  <LabelBlock
+                    lines={marker.label}
+                    textAnchor={textAnchor}
+                    fill={styles.label}
+                  />
+                </Annotation>
+              )
+            })}
+
+            {GROUP_ANNOTATIONS.map((annotation) => {
+              const styles = getVariantStyles(annotation.variant, hoveredId && PROFESSIONAL_PRIMARY_IDS.has(hoveredId) ? true : false)
+              const textAnchor = annotation.dx < 0 ? 'end' : 'start'
+
+              return (
+                <Annotation
+                  key={annotation.id}
+                  subject={annotation.coordinates}
+                  dx={annotation.dx}
+                  dy={annotation.dy}
+                  connectorProps={{
+                    stroke: styles.connector,
+                    strokeWidth: 1.1,
+                    strokeLinecap: 'round',
+                  }}
+                >
+                  <LabelBlock
+                    lines={annotation.label}
+                    textAnchor={textAnchor}
+                    fill="rgba(245,241,234,0.78)"
+                  />
+                </Annotation>
+              )
+            })}
+          </ZoomableGroup>
+        </ComposableMap>
       </div>
 
-      {/* Legend */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '48px',
-        marginTop: '20px',
-        flexWrap: 'wrap',
-      }}>
-        {/* Lived & Worked */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#C4A882', border: '1.5px solid rgba(196,168,130,0.55)' }} />
-            <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.78)', fontWeight: '600' }}>Lived &amp; Worked in:</span>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 24px', paddingLeft: '6px' }}>
-            {[
-              { label: 'United States', color: '#C4A882' },
-              { label: 'El Salvador', color: '#C4A882' },
-              { label: 'France', color: '#C4A882' },
-              { label: 'Armenia', color: '#C4A882' },
-            ].map(item => (
-              <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <div style={{ width: '12px', height: '12px', borderRadius: '2px', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.72)' }}>{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '18px 28px',
+          marginTop: '22px',
+        }}
+      >
+        {LEGEND_GROUPS.map((group) => {
+          const styles = getVariantStyles(group.tone)
 
-        {/* Professional */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#8E6F48', border: '1.5px solid rgba(142,111,72,0.55)' }} />
-            <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.78)', fontWeight: '600' }}>Professional Experience in:</span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', paddingLeft: '6px' }}>
-            {[
-              { label: 'Mexico, Colombia, Ecuador · Chile', color: '#8E6F48' },
-              { label: 'Argentina · Montego Bay, Jamaica', color: '#B89362' },
-            ].map(item => (
-              <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <div style={{ width: '12px', height: '12px', borderRadius: '2px', background: item.color, flexShrink: 0 }} />
-                <span style={{ fontSize: '12px', fontFamily: 'Montserrat, system-ui, sans-serif', color: 'rgba(245,241,234,0.72)' }}>{item.label}</span>
+          return (
+            <div
+              key={group.title}
+              style={{
+                borderRadius: '18px',
+                border: '1px solid rgba(196,168,130,0.10)',
+                background: 'rgba(255,255,255,0.02)',
+                padding: '16px 18px',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <div
+                  style={{
+                    width: '10px',
+                    height: '10px',
+                    borderRadius: '9999px',
+                    background: styles.marker,
+                    boxShadow: `0 0 0 3px ${styles.ring}`,
+                    flexShrink: 0,
+                  }}
+                />
+                <span
+                  style={{
+                    fontSize: '12px',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,241,234,0.78)',
+                    fontFamily: 'Montserrat, system-ui, sans-serif',
+                    fontWeight: '600',
+                  }}
+                >
+                  {group.title}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {group.items.map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                    <div
+                      style={{
+                        width: '9px',
+                        height: '9px',
+                        marginTop: '6px',
+                        borderRadius: '2px',
+                        background: styles.fill.startsWith('url(') ? '#57514A' : styles.fill,
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span
+                      style={{
+                        fontSize: '14px',
+                        lineHeight: '1.6',
+                        color: 'rgba(245,241,234,0.7)',
+                        fontFamily: 'Montserrat, system-ui, sans-serif',
+                      }}
+                    >
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
