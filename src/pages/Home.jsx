@@ -177,19 +177,19 @@ export default function Home() {
             <div className="col-span-12 order-1 lg:order-1 relative flex items-center justify-center mt-4 lg:mt-0" style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(26px)', transition: 'opacity 0.9s 0.3s, transform 0.9s 0.3s' }}>
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[420px] sm:w-[420px] sm:h-[480px] md:w-[460px] md:h-[520px]"
-                style={{ background: 'radial-gradient(70% 80% at 30% 20%, rgba(196,168,130,0.30) 0%, rgba(15,15,14,0.00) 62%), linear-gradient(180deg, #161615 0%, #0F0F0E 100%)', borderRadius: '55% 45% 40% 60% / 60% 40% 70% 40%', zIndex: 0 }}
+                style={{ background: 'radial-gradient(72% 82% at 35% 24%, rgba(196,168,130,0.24) 0%, rgba(196,168,130,0.10) 34%, rgba(15,15,14,0.00) 72%)', borderRadius: '55% 45% 40% 60% / 60% 40% 70% 40%', zIndex: 0 }}
               />
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[480px] sm:h-[480px] md:w-[520px] md:h-[520px]"
                 style={{ borderRadius: '9999px', border: '1px dotted rgba(196,168,130,0.26)', zIndex: 1 }}
               />
-              {/* Vignette + warm gold bloom (removes old green tint) */}
               <div
-                className="absolute inset-0 pointer-events-none"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-[340px] h-[420px] sm:w-[400px] sm:h-[470px] md:w-[450px] md:h-[520px]"
                 style={{
                   zIndex: 2,
+                  borderRadius: '50% 50% 42% 42% / 38% 38% 62% 62%',
                   background:
-                    'radial-gradient(60% 65% at 50% 38%, rgba(196,168,130,0.18) 0%, rgba(15,15,14,0.0) 55%), radial-gradient(70% 80% at 50% 50%, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.72) 72%, rgba(0,0,0,0.92) 100%)',
+                    'radial-gradient(58% 62% at 50% 34%, rgba(196,168,130,0.20) 0%, rgba(196,168,130,0.08) 34%, rgba(15,15,14,0.00) 68%), radial-gradient(82% 88% at 50% 50%, rgba(0,0,0,0.00) 52%, rgba(0,0,0,0.34) 78%, rgba(0,0,0,0.52) 100%)',
                 }}
               />
               <div className="relative z-10 w-[280px] h-[420px] sm:w-[340px] sm:h-[480px] md:w-[380px] md:h-[520px]">
@@ -341,7 +341,11 @@ export default function Home() {
                         <p className="text-xs uppercase tracking-widest mb-3" style={{ color: 'rgba(196,168,130,0.55)', letterSpacing: '0.15em' }}>Key Skills</p>
                         <div className="flex flex-wrap gap-2">
                           {item.skills.map((skill, si) => (
-                            <span key={skill} className="text-sm font-medium px-4 py-1.5 rounded-full" style={{ background: si === 0 ? 'rgba(196,168,130,0.16)' : 'rgba(255,255,255,0.05)', color: si === 0 ? '#C4A882' : 'rgba(255,255,255,0.65)', border: si === 0 ? '1px solid rgba(196,168,130,0.26)' : '1px solid rgba(255,255,255,0.10)', fontFamily: 'Georgia, serif' }}>
+                            <span
+                              key={skill}
+                              className="text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-[0_14px_30px_rgba(0,0,0,0.25)]"
+                              style={{ background: si === 0 ? 'rgba(196,168,130,0.16)' : 'rgba(255,255,255,0.05)', color: si === 0 ? '#C4A882' : 'rgba(255,255,255,0.65)', border: si === 0 ? '1px solid rgba(196,168,130,0.26)' : '1px solid rgba(255,255,255,0.10)', fontFamily: 'Georgia, serif' }}
+                            >
                               {skill}
                             </span>
                           ))}
@@ -355,7 +359,11 @@ export default function Home() {
                         <p className="text-xs uppercase tracking-widest mb-3" style={{ color: 'rgba(196,168,130,0.55)', letterSpacing: '0.15em' }}>Organizations worked with</p>
                         <div className="flex items-center gap-2 flex-wrap">
                           {PARTNER_LOGOS.slice(0, 5).map(org => (
-                            <div key={org.name} className="flex items-center gap-1.5 rounded-lg px-3 py-1.5" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                            <div
+                              key={org.name}
+                              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:shadow-[0_14px_30px_rgba(0,0,0,0.25)]"
+                              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
+                            >
                               <div className="rounded flex items-center justify-center font-black" style={{ width: '20px', height: '20px', background: org.bg, color: org.text, fontSize: '7px', letterSpacing: '-0.01em', flexShrink: 0 }}>
                                 {org.short}
                               </div>
