@@ -114,12 +114,33 @@ export default function Home() {
   const [hoveredSkill, setHoveredSkill] = useState(null)
   const [videoMuted, setVideoMuted] = useState(true)
   const [videoPlaying, setVideoPlaying] = useState(false)
+  const [videoFullscreen, setVideoFullscreen] = useState(false)
   const reduceMotion = useReducedMotion()
   const featuredVideoRef = useRef(null)
+  const featuredVideoContainerRef = useRef(null)
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100)
     return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const syncFullscreenState = () => {
+      const activeElement =
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        null
+
+      setVideoFullscreen(activeElement === featuredVideoContainerRef.current)
+    }
+
+    document.addEventListener('fullscreenchange', syncFullscreenState)
+    document.addEventListener('webkitfullscreenchange', syncFullscreenState)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', syncFullscreenState)
+      document.removeEventListener('webkitfullscreenchange', syncFullscreenState)
+    }
   }, [])
 
   const years = useCounter(8, 1200, visible)
@@ -143,6 +164,34 @@ export default function Home() {
     }
     featuredVideoRef.current.pause()
     setVideoPlaying(false)
+  }
+
+  const handleFeaturedVideoDoubleClick = async () => {
+    const fullscreenTarget = featuredVideoContainerRef.current || featuredVideoRef.current
+    if (!fullscreenTarget) return
+
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+        return
+      }
+
+      if (fullscreenTarget.requestFullscreen) {
+        await fullscreenTarget.requestFullscreen()
+        return
+      }
+
+      if (fullscreenTarget.webkitRequestFullscreen) {
+        fullscreenTarget.webkitRequestFullscreen()
+        return
+      }
+
+      if (featuredVideoRef.current?.webkitEnterFullscreen) {
+        featuredVideoRef.current.webkitEnterFullscreen()
+      }
+    } catch {
+      // Ignore fullscreen failures and preserve normal video interaction.
+    }
   }
 
   return (
@@ -464,7 +513,11 @@ export default function Home() {
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="relative aspect-[16/9] overflow-hidden bg-forest">
+              <div
+                ref={featuredVideoContainerRef}
+                className="relative aspect-[16/9] overflow-hidden bg-forest"
+                onDoubleClick={handleFeaturedVideoDoubleClick}
+              >
                 <video
                   ref={featuredVideoRef}
                   className="absolute inset-0 w-full h-full object-cover"
@@ -477,6 +530,7 @@ export default function Home() {
                   poster={HOME_MEDIA.gallery[1]}
                   onPlay={() => setVideoPlaying(true)}
                   onPause={() => setVideoPlaying(false)}
+                  onDoubleClick={handleFeaturedVideoDoubleClick}
                 >
                   <source src={HOME_MEDIA.reel} type="video/mp4" />
                   Your browser does not support the video tag.
@@ -513,7 +567,7 @@ export default function Home() {
                     <span>{videoMuted ? 'Sound off' : 'Sound on'}</span>
                   </button>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                   <button
                     type="button"
                     onClick={toggleFeaturedVideoPlayback}
@@ -547,6 +601,7 @@ export default function Home() {
                     </div>
                   </button>
                 </div>
+                {!videoFullscreen && (
                 <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-6">
                   <div>
                     <p className="text-xs uppercase tracking-widest text-white/80 font-body">Featured video</p>
@@ -556,6 +611,7 @@ export default function Home() {
                     Collaborate →
                   </Link>
                 </div>
+                )}
               </div>
             </MotionDiv>
 
