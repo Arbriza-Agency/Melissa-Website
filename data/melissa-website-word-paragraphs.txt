@@ -1,0 +1,79 @@
+﻿00: Home
+01: Melissa Velásquez 
+02: Economist · Climate & Sustainability Strategist
+03: Sustainability and climate action are among the defining priorities of our time, shaping how cities grow, how economies evolve, and how institutions and communities operate and thrive.
+04: Working at the intersection of climate strategy, sustainability, economic systems, and resilient urban development.
+05: 6+ years of expertise 
+06: 10+ countries reached 
+07: Projects delivered 
+08: UNEP, ICLEI, RCC 
+09: Para la barra que se va moviendo, key words:
+10: Climate Strategy
+11: Adaptation Planning
+12: Sustainable Urban Development
+13: ESG & Corporate Sustainability
+14: Sustainable Finance
+15: NDC & NAP Design and Policy
+16: Risk & Resilience Assessment
+17: Institutional Strengthening
+18: International Cooperation
+19: Areas of Practice: 
+20: Nota: Esta sección, creo que podría ser un poco repetitiva con la sección de expertise pero podemos verlo al final si es muy repetida si quizas se quita o si lo dejamos tipo resumen. 
+21: Trusted by leading organizations:
+22: Como esto ya está en la parte de arriba, quizás se puede quitar, o dejamos algo más … o lo dejamos así y con el tiempo se van llenando las orgs con las que he trabajado. 
+23: Featured Projects 
+24: Esto también sería similar a la sección de “projects” de la barra de arriba verdad?
+25: Global reach
+26: Project Locations 
+27: About 
+28: Economist and environmental planner with over six years of experience advancing climate action, urban resilience, sustainable development, and institutional strengthening across Latin America, the Caribbean, and the United States. 
+29: I have worked with local and national governments, private-sector actors, multilateral and international organizations, academic institutions, and NGOs to design and implement projects that address complex environmental, social, and institutional challenges. I have contributed to project design and implementation, technical assistance, strategic planning, climate risk analysis, stakeholder engagement, monitoring and evaluation, and the development of policy- and implementation-oriented deliverables.
+30: I also bring experience in identifying funding opportunities and helping projects and organizations align with broader climate and development priorities, as well as in corporate sustainability and ESG, including socio-environmental risk assessment, performance framework development, and the alignment of business strategies with global sustainability standards and long-term climate resilience goals.
+31: I specialize in turning complex climate and development priorities into actionable strategies, programs, and partnerships that strengthen institutions, support more inclusive and sustainable economies, and help communities become more resilient.
+32: I hold a Master of Science in Urban and Environmental Policy and Planning from Tufts University. My perspective is shaped by living and working across diverse regional contexts, including the United States, El Salvador, France, and Armenia. I am fluent in Spanish and English and have working proficiency in French.
+33: —--------------------------------------------
+34: Sustainability and climate action are among the defining priorities of our time, shaping how cities grow, how economies evolve, and how institutions and markets operate both today and in the future, while directly influencing the wellbeing of our communities and the health of the ecosystems that sustain them. I am passionate about working at the intersection of climate strategy, economic systems, and urban development to help design strategies and systems that strengthen the resilience and long-term sustainability of cities, communities, and businesses.
+35: My experience has been shaped on a global scale through living and working across multiple countries and regions. My work spans diverse geographies, engaging with sustainability challenges across local, national, and international contexts, and across public institutions, private sector actors, and international organizations.
+36: These experiences continue to shape how I approach sustainability challenges — recognizing that effective climate solutions must be grounded in local realities while informed by global knowledge.
+37: Pagina III
+38: II. Areas of Expertise
+39: Climate Strategy & AdaptationSupporting governments, cities, and organizations in climate risk analysis, adaptation planning, and the design of strategies aligned with national priorities and international climate frameworks, including NDCs and national adaptation processes.
+40: City Planning & Territorial DevelopmentSupporting resilient city planning, sustainable urban development, and territorial strategies that integrate environmental, economic, and social priorities.
+41: Sustainability, ESG & Corporate Climate StrategyAdvising institutions and private-sector actors on sustainability strategy, ESG integration, socio-environmental risk, and the alignment of organizational planning with long-term climate resilience goals.
+42: Climate Finance & Funding AlignmentIdentifying funding opportunities and supporting the alignment of projects with climate finance, development finance, and other funding mechanisms for sustainability and resilience initiatives.
+43: ​​Project & Program CoordinationCoordinating projects, multi-stakeholder processes, and cross-sector initiatives from planning through implementation, with attention to timelines, deliverables, partnerships, and institutional alignment.
+44: Policy, Governance & Institutional StrengtheningSupporting the alignment of climate and development strategies with public policy, governance frameworks, and institutional priorities to strengthen implementation capacity and long-term impact.
+45: International Cooperation & Program CoordinationCoordinating multi-stakeholder initiatives and cross-sector partnerships across governments, organizations, and institutions to advance collaborative climate and development agendas.
+46: Technical Assistance & Implementation SupportProviding technical guidance in the design, development, and implementation of climate, sustainability, and resilience-related initiatives across sectors and institutional contexts.
+47: Capacity Building & Participatory ProcessesDesigning and facilitating workshops, participatory planning processes, and institutional strengthening efforts that promote inclusive, practical, and collaborative approaches to sustainability and climate action.
+48: Monitoring, Evaluation & Learning (MEL)Supporting the development of indicators, reporting processes, and learning frameworks to strengthen project performance, accountability, and adaptive implementation.
+49: ………………… 
+50: Selected Projects
+51: Climate Adaptation Planning – El Salvador UNEP / Government of El Salvador
+52: El Salvador’s first National Adaptation Plan, a national process designed to strengthen long-term climate resilience by defining the country’s strategic direction for adaptation. The NAP helps align institutions, sectors, and territories around shared priorities while strengthening the country’s capacity to plan, implement, and scale adaptation action across four key areas: governance and institutional coordination, evidence-based adaptation solutions, private sector engagement, and adaptation finance.
+53: Climate Risk and Resilience Assessment – Guatemala City Resilient Cities Catalyst
+54: Guatemala City Climate Risk & Resilience Assessment
+55: A project-level climate resilience assessment for the Bethania-Sakerty Ecological Park and Productive Ravine Project in Guatemala City, developed to translate climate risk into actionable planning and design. Through hazard prioritization, exposure analysis, and risk profiling across project components and user groups, the assessment helped define targeted adaptation and risk management strategies to strengthen long-term resilience, reduce potential losses, and guide project implementation.
+56: Cities Forward Initiative – Latin America & United States ICLEI USA
+57: A flagship hemispheric partnership of the U.S. Department of State, ICLEI – Local Governments for Sustainability, Resilient Cities Catalyst, and the Institute of the Americas, Cities Forward brought together 12 U.S. cities and 12 cities across Latin America and the Caribbean to address critical urban challenges related to sustainability, equity, and resilience. The initiative combined peer exchange, technical cooperation, diplomatic engagement, and capacity building to support city-led project design, strengthen feasibility and implementation readiness, and expand pathways toward investment and financing.
+58: Massachusetts port authority 
+59: First Climate Action Plan Richmond IDNIANA 
+60: Education, Awards, and Certificatations 
+61: Section — Education
+62: Tufts University Master of Science in Urban and Environmental Policy and Planning GPA: 3.89 / 4.0
+63: Earlham College Bachelor of Arts in Economics GPA: 3.91 / 4.0 Phi Beta Kappa | Graduated with Honors
+64: United World College of Dilijan — Armenia International Baccalaureate
+65: Section — Research & Publications
+66: Master’s Thesis – Tufts University (2024)East Boston’s Climate Resilience: A Resident-Centered Analysis of Coastal Preparedness, Challenges, and Needs
+67: Mutual Aid Lessons from COVID-19 in East Boston (2024) Contribution exploring civic infrastructure and community-based resilience.
+68: South Boston Waterfront District 2.0 (2023) Co-author in collaboration with the Massachusetts Port Authority.
+69: Climate Action Plan – Richmond, Indiana (2022) Co-author supporting the development of the city's first climate action plan.
+70: Section — Awards & Recognition
+71: Future Leaders Fellow — Tufts University (2022) Recognition for academic excellence within the Urban and Environmental Policy and Planning program.
+72: Claude Stinneford Award in Economics — Earlham College (2022) Awarded for outstanding academic achievement in economics.
+73: Arthur M. Charles Service Award — Earlham College (2022) Recognition for service and contributions to the Department of Languages and intercultural engagement.
+74: Section — Certifications
+75: Just Communities Professional Certification Southern Equity & Just Communities — 2024
+76: Sustainability Metrics Certification Tufts University — 2023
+77: Human Subjects Research Certification (CITI Program) Research ethics and data protection — 2023
+78: Yale Young Global Scholars Yale University — 2016

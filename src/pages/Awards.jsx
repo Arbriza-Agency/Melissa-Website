@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 
 const awardsRecognition = [
   {
@@ -80,7 +80,7 @@ function RecognitionCard({ item, index }) {
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{ background: 'radial-gradient(circle at top right, rgba(196,168,130,0.12) 0%, rgba(196,168,130,0.0) 48%)' }}
+        style={{ background: 'radial-gradient(circle at top right, rgba(149,213,178,0.12) 0%, rgba(149,213,178,0.0) 48%)' }}
       />
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-4">
@@ -146,8 +146,8 @@ function CertificationCard({ item, featured = false }) {
 export default function Awards() {
   return (
     <div className="pt-20 bg-light">
-      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
+      <section data-reveal className="bg-deep-green text-dark py-14 md:py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-3 animate-fade-up">
           <p className="section-label text-soft-green">Awards & Certifications</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
             Recognition & Achievements
@@ -190,7 +190,7 @@ export default function Awards() {
             >
               <div
                 className="pointer-events-none absolute inset-0"
-                style={{ background: 'radial-gradient(circle at top right, rgba(196,168,130,0.12) 0%, rgba(196,168,130,0) 38%)' }}
+                style={{ background: 'radial-gradient(circle at top right, rgba(149,213,178,0.12) 0%, rgba(149,213,178,0) 38%)' }}
               />
               <div className="relative z-10">
                 <p className="section-label">Certifications</p>
@@ -220,7 +220,7 @@ export default function Awards() {
           className="mx-auto max-w-6xl rounded-[32px] border border-white/10 px-8 py-10"
           style={{
             background:
-              'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(196,168,130,0.08) 100%)',
+              'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(149,213,178,0.08) 100%)',
             boxShadow: '0 20px 50px rgba(0,0,0,0.18)',
           }}
         >
@@ -229,8 +229,7 @@ export default function Awards() {
               <p className="section-label">Looking Ahead</p>
               <h2 className="mt-3 font-display text-3xl text-dark">Recognition is most meaningful when it supports future work.</h2>
               <p className="mt-4 text-sm leading-7 text-dark/62 font-body">
-                Available for collaborations, policy advisory work, and research engagements
-                where academic rigor and practical implementation need to move together.
+                Collaborations, policy advisory work, and research engagements where academic rigor and practical implementation need to move together.
               </p>
             </div>
             <Link to="/contact" className="btn-primary shrink-0">
@@ -242,3 +241,4 @@ export default function Awards() {
     </div>
   )
 }
+

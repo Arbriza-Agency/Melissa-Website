@@ -1,16 +1,15 @@
 import Card from './Card'
 
 const categoryColors = {
-  'Climate Strategy':          { bg: 'rgba(196,168,130,0.14)', text: 'rgba(196,168,130,0.95)', border: 'rgba(196,168,130,0.28)' },
-  'Urban Development':         { bg: 'rgba(196,168,130,0.12)', text: 'rgba(196,168,130,0.92)', border: 'rgba(196,168,130,0.24)' },
-  'Environmental Economics':   { bg: 'rgba(196,168,130,0.12)', text: 'rgba(196,168,130,0.92)', border: 'rgba(196,168,130,0.24)' },
-  'Public Policy':             { bg: 'rgba(196,168,130,0.12)', text: 'rgba(196,168,130,0.92)', border: 'rgba(196,168,130,0.24)' },
-  'International Cooperation': { bg: 'rgba(196,168,130,0.12)', text: 'rgba(196,168,130,0.92)', border: 'rgba(196,168,130,0.24)' },
+  'Climate Strategy': { bg: 'rgba(149,213,178,0.12)', text: 'rgba(149,213,178,0.95)', border: 'rgba(149,213,178,0.22)' },
+  'Risk & Resilience Assessment': { bg: 'rgba(45,106,79,0.18)', text: 'rgba(149,213,178,0.92)', border: 'rgba(149,213,178,0.18)' },
+  'Sustainable Urban Development': { bg: 'rgba(27,67,50,0.22)', text: 'rgba(149,213,178,0.88)', border: 'rgba(149,213,178,0.16)' },
+  'International Cooperation': { bg: 'rgba(149,213,178,0.10)', text: 'rgba(149,213,178,0.92)', border: 'rgba(149,213,178,0.20)' },
 }
 
 export default function ProjectCard({ project }) {
   const { title, category, year, client, description, tags, color } = project
-  const colors = categoryColors[category] || { bg: 'rgba(196,168,130,0.12)', text: 'rgba(196,168,130,0.92)', border: 'rgba(196,168,130,0.24)' }
+  const colors = categoryColors[category] || { bg: 'rgba(149,213,178,0.10)', text: 'rgba(149,213,178,0.92)', border: 'rgba(149,213,178,0.18)' }
 
   return (
     <Card className="flex flex-col gap-4 group">
@@ -22,7 +21,9 @@ export default function ProjectCard({ project }) {
         >
           {category}
         </span>
-        <span className="text-xs font-body text-dark/55 font-medium shrink-0">{year}</span>
+        {year ? (
+          <span className="text-xs font-body text-dark/55 font-medium shrink-0">{year}</span>
+        ) : null}
       </div>
 
       {/* Accent line */}

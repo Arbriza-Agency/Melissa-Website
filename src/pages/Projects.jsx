@@ -16,15 +16,15 @@ export default function Projects() {
     <div className="pt-20">
 
       {/* Header */}
-      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
+      <section data-reveal className="bg-deep-green text-dark py-14 md:py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-3 animate-fade-up">
           <p className="section-label text-soft-green">Portfolio</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
             Selected Projects
           </h1>
           <p className="text-dark/70 font-body max-w-2xl mx-auto leading-relaxed">
-            A selection of projects spanning climate policy, urban resilience,
-            environmental economics, and international cooperation.
+            A selection of work across climate adaptation planning, urban resilience,
+            sustainable development, and international cooperation.
           </p>
         </div>
       </section>

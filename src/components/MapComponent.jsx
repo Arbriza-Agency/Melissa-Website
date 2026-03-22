@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import {
   Annotation,
   ComposableMap,
@@ -79,44 +79,44 @@ function getRegionVariant(geoId) {
 function getVariantStyles(variant, active = false) {
   if (variant === 'lived') {
     return {
-      fill: active ? '#D6BC99' : '#C4A882',
-      stroke: active ? 'rgba(245,241,234,0.52)' : 'rgba(231,205,174,0.34)',
-      marker: '#C4A882',
-      ring: 'rgba(231,205,174,0.58)',
-      label: 'rgba(245,241,234,0.94)',
-      connector: 'rgba(231,205,174,0.54)',
+      fill: active ? '#95D5B2' : 'rgba(149,213,178,0.72)',
+      stroke: active ? 'rgba(248,249,250,0.55)' : 'rgba(149,213,178,0.26)',
+      marker: '#95D5B2',
+      ring: 'rgba(149,213,178,0.45)',
+      label: 'rgba(248,249,250,0.94)',
+      connector: 'rgba(149,213,178,0.36)',
     }
   }
 
   if (variant === 'professional-secondary') {
     return {
-      fill: active ? '#C29C68' : '#AC865A',
-      stroke: active ? 'rgba(245,241,234,0.34)' : 'rgba(196,168,130,0.24)',
-      marker: '#B89362',
-      ring: 'rgba(196,168,130,0.42)',
-      label: 'rgba(245,241,234,0.82)',
-      connector: 'rgba(196,168,130,0.38)',
+      fill: active ? '#2D6A4F' : 'rgba(45,106,79,0.76)',
+      stroke: active ? 'rgba(248,249,250,0.32)' : 'rgba(149,213,178,0.18)',
+      marker: '#2D6A4F',
+      ring: 'rgba(149,213,178,0.32)',
+      label: 'rgba(248,249,250,0.82)',
+      connector: 'rgba(149,213,178,0.26)',
     }
   }
 
   if (variant === 'professional-primary') {
     return {
-      fill: active ? '#A8865B' : '#8E6F48',
-      stroke: active ? 'rgba(245,241,234,0.32)' : 'rgba(196,168,130,0.22)',
-      marker: '#8E6F48',
-      ring: 'rgba(196,168,130,0.38)',
-      label: 'rgba(245,241,234,0.8)',
-      connector: 'rgba(196,168,130,0.34)',
+      fill: active ? '#1B4332' : 'rgba(27,67,50,0.82)',
+      stroke: active ? 'rgba(248,249,250,0.30)' : 'rgba(149,213,178,0.16)',
+      marker: '#1B4332',
+      ring: 'rgba(149,213,178,0.28)',
+      label: 'rgba(248,249,250,0.80)',
+      connector: 'rgba(149,213,178,0.22)',
     }
   }
 
   return {
     fill: active ? 'url(#landGradientActive)' : 'url(#landGradient)',
-    stroke: active ? 'rgba(245,241,234,0.18)' : 'rgba(245,241,234,0.09)',
-    marker: '#8A837B',
-    ring: 'rgba(245,241,234,0.16)',
-    label: 'rgba(245,241,234,0.74)',
-    connector: 'rgba(245,241,234,0.24)',
+    stroke: active ? 'rgba(248,249,250,0.16)' : 'rgba(248,249,250,0.08)',
+    marker: '#2D6A4F',
+    ring: 'rgba(248,249,250,0.14)',
+    label: 'rgba(248,249,250,0.74)',
+    connector: 'rgba(248,249,250,0.22)',
   }
 }
 
@@ -129,7 +129,7 @@ function LabelBlock({ lines, textAnchor = 'start', fill }) {
       fontWeight="500"
       fill={fill}
       paintOrder="stroke"
-      stroke="rgba(15,15,14,0.92)"
+      stroke="rgba(11,29,24,0.92)"
       strokeWidth="3.6"
       strokeLinejoin="round"
     >
@@ -154,8 +154,8 @@ export default function MapComponent() {
         borderRadius: '32px',
         padding: '36px 28px 28px',
         background:
-          'radial-gradient(circle at 50% 0%, rgba(196,168,130,0.10) 0%, rgba(15,15,14,0.0) 30%), linear-gradient(180deg, rgba(26,25,24,0.98) 0%, rgba(15,15,14,1) 100%)',
-        border: '1px solid rgba(196,168,130,0.16)',
+          'radial-gradient(circle at 50% 0%, rgba(149,213,178,0.10) 0%, rgba(11,29,24,0.0) 30%), linear-gradient(180deg, rgba(27,67,50,0.88) 0%, rgba(11,29,24,1) 100%)',
+        border: '1px solid rgba(149,213,178,0.16)',
         boxShadow: '0 28px 80px rgba(0,0,0,0.32)',
       }}
     >
@@ -166,7 +166,7 @@ export default function MapComponent() {
             fontSize: '11px',
             letterSpacing: '0.24em',
             textTransform: 'uppercase',
-            color: 'rgba(196,168,130,0.72)',
+            color: 'rgba(149,213,178,0.72)',
             fontFamily: 'Montserrat, system-ui, sans-serif',
             fontWeight: '600',
           }}
@@ -178,7 +178,7 @@ export default function MapComponent() {
             margin: '0',
             fontSize: 'clamp(34px, 4.6vw, 52px)',
             lineHeight: 1.06,
-            color: '#F5F1EA',
+            color: '#F8F9FA',
             fontFamily: 'Georgia, Times New Roman, serif',
             fontWeight: '700',
             letterSpacing: '-0.02em',
@@ -192,13 +192,13 @@ export default function MapComponent() {
             margin: '16px auto 0',
             fontSize: '15px',
             lineHeight: '1.8',
-            color: 'rgba(245,241,234,0.66)',
+            color: 'rgba(248,249,250,0.66)',
             fontFamily: 'Montserrat, system-ui, sans-serif',
           }}
         >
-          Over the past ten years, I have lived, studied, and worked across multiple regions,
-          shaping a diverse and internationally informed perspective on climate strategy,
-          economic development, and urban resilience.
+          My perspective is shaped by living and working across diverse regional contexts — including the United States,
+          El Salvador, France, and Armenia — and by engaging with sustainability challenges across local, national, and
+          international settings.
         </p>
       </div>
 
@@ -208,8 +208,8 @@ export default function MapComponent() {
           borderRadius: '26px',
           overflow: 'hidden',
           background:
-            'radial-gradient(circle at 50% 18%, rgba(245,241,234,0.05) 0%, rgba(15,15,14,0) 34%), linear-gradient(180deg, rgba(24,24,23,0.98) 0%, rgba(15,15,14,0.98) 100%)',
-          border: '1px solid rgba(196,168,130,0.12)',
+            'radial-gradient(circle at 50% 18%, rgba(248,249,250,0.05) 0%, rgba(11,29,24,0) 34%), linear-gradient(180deg, rgba(27,67,50,0.72) 0%, rgba(11,29,24,0.98) 100%)',
+          border: '1px solid rgba(149,213,178,0.12)',
           padding: '16px 8px 8px',
         }}
       >
@@ -224,7 +224,7 @@ export default function MapComponent() {
             <linearGradient id="oceanGradient" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#121110" />
               <stop offset="52%" stopColor="#171614" />
-              <stop offset="100%" stopColor="#0F0F0E" />
+              <stop offset="100%" stopColor="#0B1D18" />
             </linearGradient>
             <linearGradient id="landGradient" x1="120" y1="120" x2="1040" y2="540" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#403C37" />
@@ -309,7 +309,7 @@ export default function MapComponent() {
                   <g filter="url(#softGlow)" style={{ cursor: 'pointer' }}>
                     <circle
                       r={marker.variant === 'lived' ? 7 : 5.5}
-                      fill="rgba(15,15,14,0.88)"
+                      fill="rgba(11,29,24,0.88)"
                       stroke={styles.ring}
                       strokeWidth={marker.variant === 'lived' ? 1.8 : 1.4}
                     />
@@ -364,7 +364,7 @@ export default function MapComponent() {
                   <LabelBlock
                     lines={annotation.label}
                     textAnchor={textAnchor}
-                    fill="rgba(245,241,234,0.78)"
+                    fill="rgba(248,249,250,0.78)"
                   />
                 </Annotation>
               )
@@ -389,7 +389,7 @@ export default function MapComponent() {
               key={group.title}
               style={{
                 borderRadius: '18px',
-                border: '1px solid rgba(196,168,130,0.10)',
+                border: '1px solid rgba(149,213,178,0.10)',
                 background: 'rgba(255,255,255,0.02)',
                 padding: '16px 18px',
               }}
@@ -410,7 +410,7 @@ export default function MapComponent() {
                     fontSize: '12px',
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
-                    color: 'rgba(245,241,234,0.78)',
+                    color: 'rgba(248,249,250,0.78)',
                     fontFamily: 'Montserrat, system-ui, sans-serif',
                     fontWeight: '600',
                   }}
@@ -436,7 +436,7 @@ export default function MapComponent() {
                       style={{
                         fontSize: '14px',
                         lineHeight: '1.6',
-                        color: 'rgba(245,241,234,0.7)',
+                        color: 'rgba(248,249,250,0.7)',
                         fontFamily: 'Montserrat, system-ui, sans-serif',
                       }}
                     >
@@ -452,3 +452,4 @@ export default function MapComponent() {
     </div>
   )
 }
+

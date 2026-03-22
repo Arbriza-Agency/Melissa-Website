@@ -7,22 +7,22 @@ export default function Expertise() {
     <div className="pt-20">
 
       {/* Header */}
-      <section data-reveal className="bg-deep-green text-dark py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center space-y-4 animate-fade-up">
+      <section data-reveal className="bg-deep-green text-dark py-14 md:py-16 px-6">
+        <div className="max-w-4xl mx-auto text-center space-y-3 animate-fade-up">
           <p className="section-label text-soft-green">Expertise</p>
           <h1 className="font-display text-4xl md:text-5xl font-bold">
-            Policy-Oriented Sustainability Expertise
+            Sustainability & Climate Strategy Expertise
           </h1>
           <p className="text-dark/70 font-body max-w-2xl mx-auto leading-relaxed">
-            Eight years of applied work across climate strategy, urban development,
-            environmental economics, and international cooperation.
+            Applied experience across climate strategy and adaptation, sustainable urban development,
+            ESG, and multi-stakeholder program coordination.
           </p>
         </div>
       </section>
 
       {/* Expertise cards */}
       <SectionContainer label="Areas of Practice" title="Core Competencies"
-                        subtitle="Specialized knowledge developed through projects with governments, multilateral banks, and international organizations.">
+                        subtitle="Specialized knowledge developed through projects with governments, international organizations, and cross-sector partners.">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {expertise.map((item, i) => (
             <div key={item.title}
@@ -78,8 +78,7 @@ export default function Expertise() {
             Need expertise for your project?
           </h2>
           <p className="font-body text-dark/60 text-sm leading-relaxed">
-            Available for consulting engagements, technical advisory roles,
-            and research collaborations.
+            Consulting engagements, technical advisory roles, and research collaborations.
           </p>
           <Link to="/contact" className="btn-primary">Get in Touch →</Link>
         </div>

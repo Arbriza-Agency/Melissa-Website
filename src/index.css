@@ -4,12 +4,13 @@
   --font-body: "Montserrat", system-ui, sans-serif;
   --font-display: "Cormorant Garamond", Georgia, serif;
 
-  /* Editorial palette */
-  --color-deep-green: #0F0F0E; /* base almost-black */
-  --color-forest: #161615;    /* elevated surfaces */
-  --color-soft-green: #C4A882; /* warm gold accent */
-  --color-light: #0F0F0E;
-  --color-dark: #F5F1EA;      /* soft editorial white */
+  /* Sustainability palette */
+  --color-deep-green: #0B1D18; /* background */
+  --color-forest: #1B4332;    /* primary */
+  --color-moss: #2D6A4F;      /* secondary */
+  --color-soft-green: #95D5B2; /* accent */
+  --color-light: #0B1D18;
+  --color-dark: #F8F9FA;
 }
 
 @layer base {
